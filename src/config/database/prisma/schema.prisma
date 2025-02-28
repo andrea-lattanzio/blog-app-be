@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/**
+ * Article model with a one-to-many relationship with Chapter
+ */
+model Article {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  author      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  chapters    Chapter[]
+}
+
+/**
+ * Chapter model with a one-to-many relationship with Paragraph
+ */
+model Chapter {
+  id        Int         @id @default(autoincrement())
+  title     String
+  content   Paragraph[]
+  articleId Int
+  article   Article     @relation(fields: [articleId], references: [id])
+}
+
+/**
+ * Paragraph model with a one-to-many relationship with CodeSection
+ */
+model Paragraph {
+  id           Int           @id @default(autoincrement())
+  text         String
+  style        String?
+  chapterId    Int
+  chapter      Chapter       @relation(fields: [chapterId], references: [id])
+  codeSections CodeSection[] // One-to-many relationship with CodeSection
+}
+
+/**
+ * CodeSection model with a many-to-one relationship with Paragraph
+ */
+model CodeSection {
+  id          Int       @id @default(autoincrement())
+  language    String
+  code        String
+  caption     String?
+  paragraphId Int
+  paragraph   Paragraph @relation(fields: [paragraphId], references: [id])
+}
