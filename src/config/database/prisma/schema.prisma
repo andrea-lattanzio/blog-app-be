@@ -11,7 +11,7 @@ datasource db {
  * Article model with a one-to-many relationship with Chapter
  */
 model Article {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   title       String
   description String
   author      String
@@ -24,10 +24,10 @@ model Article {
  * Chapter model with a one-to-many relationship with Paragraph
  */
 model Chapter {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(uuid())
   title     String
   content   Paragraph[]
-  articleId Int
+  articleId String
   article   Article     @relation(fields: [articleId], references: [id])
 }
 
@@ -35,10 +35,10 @@ model Chapter {
  * Paragraph model with a one-to-many relationship with CodeSection
  */
 model Paragraph {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid())
   text         String
   style        String?
-  chapterId    Int
+  chapterId    String
   chapter      Chapter       @relation(fields: [chapterId], references: [id])
   codeSections CodeSection[] // One-to-many relationship with CodeSection
 }
@@ -47,10 +47,10 @@ model Paragraph {
  * CodeSection model with a many-to-one relationship with Paragraph
  */
 model CodeSection {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   language    String
   code        String
   caption     String?
-  paragraphId Int
+  paragraphId String
   paragraph   Paragraph @relation(fields: [paragraphId], references: [id])
 }
