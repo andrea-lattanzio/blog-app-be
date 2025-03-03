@@ -23,7 +23,8 @@
     "migrate:dev": "dotenv -e src/config/env/development.env -- npx prisma migrate dev --name",
     "migrate:prod": "dotenv -e src/config/env/production.env -- npx prisma migrate deploy",
     "reset:dev": "dotenv -e src/config/env/development.env -- npx prisma migrate reset --skip-seed",
-    "reset:prod": "dotenv -e src/config/env/production.env -- npx prisma migrate reset --skip-seed"
+    "reset:prod": "dotenv -e src/config/env/production.env -- npx prisma migrate reset --skip-seed",
+    "seed": "dotenv -e src/config/env/development.env -- npx prisma db seed"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
