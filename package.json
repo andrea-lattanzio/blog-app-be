@@ -19,7 +19,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:studio": "dotenv -e src/config/env/development.env prisma studio",
-    "migrate:dev": "dotenv -e src/config/env/development.env -- npx prisma migrate dev --name"
+    "migrate:dev": "dotenv -e src/config/env/development.env -- npx prisma migrate dev --name",
+    "migrate:prod": "dotenv -e .env.production -- npx prisma migrate deploy",
+    "reset:prod": "dotenv -e .env.production -- npx prisma migrate reset --skip-seed"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
