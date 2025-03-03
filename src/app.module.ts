@@ -19,5 +19,5 @@ export class AppModule {}
 function getEnvPath(): string {
   const configService = new ConfigService();
   const env: string = configService.get<string>('NODE_ENV') || 'development';
-  return join(`${env}.env`);
+  return join(`src/config/env/${env}.env`);
 }
