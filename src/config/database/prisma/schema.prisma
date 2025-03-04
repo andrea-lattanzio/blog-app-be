@@ -28,7 +28,7 @@ model Chapter {
   title      String
   paragraphs Paragraph[]
   articleId  String
-  article    Article     @relation(fields: [articleId], references: [id])
+  article    Article     @relation(fields: [articleId], references: [id], onDelete: Cascade)
 }
 
 /**
@@ -39,7 +39,7 @@ model Paragraph {
   text         String
   style        String?
   chapterId    String
-  chapter      Chapter       @relation(fields: [chapterId], references: [id])
+  chapter      Chapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   codeSections CodeSection[] // One-to-many relationship with CodeSection
 }
 
@@ -52,5 +52,5 @@ model CodeSection {
   code        String
   caption     String?
   paragraphId String
-  paragraph   Paragraph @relation(fields: [paragraphId], references: [id])
+  paragraph   Paragraph @relation(fields: [paragraphId], references: [id], onDelete: Cascade)
 }
