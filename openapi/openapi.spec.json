@@ -1,0 +1,139 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/article": {
+      "post": {
+        "operationId": "ArticleController_create",
+        "summary": "Create Article",
+        "description": "This endpoint creates a new article entity as well as related chapters, paragraphs and code sections",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Article information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The article was succesfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      },
+      "get": {
+        "operationId": "ArticleController_findAll",
+        "summary": "Get Articles",
+        "description": "This endpoint returns a list of all articles without related entities",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      }
+    },
+    "/api/article/{id}": {
+      "get": {
+        "operationId": "ArticleController_findOne",
+        "summary": "Get Article",
+        "description": "This endpoint returns a single article along with all the related entities",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      },
+      "delete": {
+        "operationId": "ArticleController_remove",
+        "summary": "Delete Article",
+        "description": "This endpoint removes an article",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      }
+    },
+    "/api": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Blog-app API",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateArticleDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ArticleDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
