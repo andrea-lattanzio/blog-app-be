@@ -10,6 +10,11 @@ import { fullArticle } from './utils/article.query';
 export class ArticleService {
   constructor(private readonly prisma: DatabaseService) {}
 
+  /**
+   * 
+   * @param createArticleDto Article info (including related entities).
+   * @returns The newly created article, transformed into ArticleDto class.
+   */
   async create(createArticleDto: CreateArticleDto): Promise<ArticleDto> {
     const { chapters } = createArticleDto;
     const createdArticle = await this.prisma.article.create({
@@ -21,11 +26,20 @@ export class ArticleService {
     return new ArticleDto(createdArticle);
   }
 
+  /**
+   * 
+   * @returns A list of all articles, transformed into ArticleDto class.
+   */
   async findAll(): Promise<ArticleDto[]> {
     const articles = await this.prisma.article.findMany();
     return ArticleDto.fromEntities(articles);
   }
 
+  /**
+   *
+   * @param id The article id.
+   * @returns A single article along with all the related entities.
+   */
   async findOne(id: string): Promise<ArticleDto> {
     const article = await this.prisma.article.findUniqueOrThrow({
       where: { id },
@@ -34,13 +48,11 @@ export class ArticleService {
     return new ArticleDto(article);
   }
 
-  // async update(id: string, updateArticleDto: UpdateArticleDto): Promise<any> {
-  //   return this.prisma.article.update({
-  //     where: { id },
-  //     data: updateArticleDto,
-  //   });
-  // }
-
+  /**
+   * 
+   * @param id The article id.
+   * @returns The deleted article.
+   */
   async remove(id: string): Promise<ArticleDto> {
     const deletedArticle = await this.prisma.article.delete({ where: { id } });
     return new ArticleDto(deletedArticle);

@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
 import {
   ApiBody,
   ApiCreatedResponse,
@@ -23,6 +22,12 @@ import { ArticleDto } from './dto/body';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
+  /**
+   * Creates a new article along with its related chapters, paragraphs and code sections.
+   * 
+   * @param createArticleDto - The article information (including chapters, paragraphs and code sections).
+   * @returns The newly created article without related entities.
+   */
   @Post()
   @ApiOperation({
     summary: 'Create Article',
@@ -41,6 +46,10 @@ export class ArticleController {
     return this.articleService.create(createArticleDto);
   }
 
+  /**
+   * 
+   * @returns A list of all articles without related entities.
+   */
   @Get()
   @ApiOperation({
     summary: 'Get Articles',
@@ -51,6 +60,11 @@ export class ArticleController {
     return this.articleService.findAll();
   }
 
+  /**
+   * 
+   * @param id The article id.
+   * @returns A single article along with all the related entities.
+   */
   @Get(':id')
   @ApiOperation({
     summary: 'Get Article',
@@ -61,11 +75,11 @@ export class ArticleController {
     return this.articleService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
-  //   return this.articleService.update(id, updateArticleDto);
-  // }
-
+  /**
+   * 
+   * @param id The article id.
+   * @returns The deleted article along with all the related entities.
+   */
   @Delete(':id')
   @ApiOperation({
     summary: 'Delete Article',
