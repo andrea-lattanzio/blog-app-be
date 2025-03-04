@@ -8,6 +8,7 @@ class CodeSectionDto {
   language: string;
   code: string;
   caption?: string;
+  @Exclude()
   paragraphId: string;
 }
 
@@ -15,16 +16,17 @@ class ParagraphDto {
   id: string;
   text: string;
   style?: string;
+  @Exclude()
   chapterId: string;
-
+  @Type(() => CodeSectionDto)
   codeSections: CodeSectionDto[];
 }
 
 class ChapterDto {
   id: string;
   title: string;
+  @Exclude()
   articleId: string;
-
   @Type(() => ParagraphDto)
   paragraphs: ParagraphDto[];
 }
@@ -37,11 +39,9 @@ export class ArticleDto {
 
   @Exclude()
   createdAt: string;
-  @Exclude()
   updatedAt: string;
-
   @Type(() => ChapterDto)
-  chapters: ChapterDto;
+  chapters: ChapterDto[];
 
   constructor(partial: Partial<FullArticle>) {
     Object.assign(this, plainToInstance(ArticleDto, partial));
