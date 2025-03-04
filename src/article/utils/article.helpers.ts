@@ -14,7 +14,6 @@ export const createChapters = (chapters: CreateChapterDto[]) => {
 const createChapterContent = (paragraphs: CreateParagraphDto[]) => {
   return paragraphs.map((paragraph) => ({
     text: paragraph.text,
-    style: paragraph.style,
     codeSections: { create: createCodeSection(paragraph.codeSections) },
   }));
 };

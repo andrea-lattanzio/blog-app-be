@@ -20,10 +20,6 @@ export class CreateParagraphDto {
   @IsNotEmpty()
   text: string;
 
-  @IsOptional()
-  @IsString()
-  style?: string;
-
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateCodeSectionDto)
