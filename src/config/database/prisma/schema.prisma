@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AuthProvider {
+  Local
+  Google
+}
+
 /**
  * User model
  */
@@ -14,7 +19,7 @@ model User {
   id           String    @id @default(uuid())
   email        String    @unique
   password     String?
-  authProvider String
+  authProvider AuthProvider
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   Article      Article[]
