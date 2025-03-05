@@ -16,9 +16,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ArticleDto } from './dto/body';
-import {
-  UpdateArticleDto
-} from './dto/update-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
+import { GetUser } from 'src/shared/decorators/getUser.decorator';
 
 @ApiTags('article')
 @Controller('article')
@@ -45,8 +44,11 @@ export class ArticleController {
     description: 'The article was succesfully created',
     type: ArticleDto,
   })
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articleService.create(createArticleDto);
+  create(
+    @GetUser('id') userId: string,
+    @Body() createArticleDto: CreateArticleDto,
+  ) {
+    return this.articleService.create(userId, createArticleDto);
   }
 
   /**
@@ -79,7 +81,7 @@ export class ArticleController {
   }
 
   /**
-   * 
+   *
    * @param id The article id.
    * @param updateArticleDto The updated article info (including updated related entities).
    * @returns The updated article.

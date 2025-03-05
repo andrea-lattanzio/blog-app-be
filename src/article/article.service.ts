@@ -16,11 +16,12 @@ export class ArticleService {
    * @param createArticleDto Article info (including related entities).
    * @returns The newly created article, transformed into ArticleDto class.
    */
-  async create(createArticleDto: CreateArticleDto): Promise<ArticleDto> {
+  async create(userId: string, createArticleDto: CreateArticleDto): Promise<ArticleDto> {
     const { chapters } = createArticleDto;
     const createdArticle = await this.prisma.article.create({
       data: {
         ...createArticleDto,
+        userId: userId,
         chapters: { create: createChapters(chapters) },
       },
     });

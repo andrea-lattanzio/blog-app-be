@@ -46,10 +46,6 @@ export class CreateArticleDto {
   @IsNotEmpty()
   description: string;
 
-  @IsString()
-  @IsNotEmpty()
-  author: string;
-
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateChapterDto)
