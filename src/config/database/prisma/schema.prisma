@@ -8,16 +8,30 @@ datasource db {
 }
 
 /**
+ * User model
+ */
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  password     String?
+  authProvider String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Article      Article[]
+}
+
+/**
  * Article model with a one-to-many relationship with Chapter
  */
 model Article {
   id          String    @id @default(uuid())
   title       String
   description String
-  author      String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   chapters    Chapter[]
+  author      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
 }
 
 /**
