@@ -17,7 +17,7 @@ export class LoginRequestDTO {
   password: string;
 }
 
-export interface LoginResponseDto {
+export class LoginResponseDto {
   token: string;
   user: Partial<User>;
 }

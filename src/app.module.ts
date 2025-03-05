@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { ArticleModule } from './article/article.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtGuard } from './shared/guards/jwt.guard';
 
 @Module({
   imports: [
@@ -11,10 +13,9 @@ import { ArticleModule } from './article/article.module';
     ArticleModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: JwtGuard }],
 })
 export class AppModule {}
-
 
 function getEnvPath(): string {
   const configService = new ConfigService();
