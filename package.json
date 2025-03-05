@@ -19,12 +19,12 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generate:postman": "openapi2postmanv2 -s ./openapi/openapi.spec.json -o ./openapi/postman.spec.json -p",
-    "prisma:studio:dev": "dotenv -e src/config/env/development.env prisma studio",
-    "prisma:studio:prod": "dotenv -e src/config/env/production.env prisma studio",
-    "migrate:dev": "dotenv -e src/config/env/development.env -- npx prisma migrate dev --name",
-    "migrate:prod": "dotenv -e src/config/env/production.env -- npx prisma migrate deploy",
-    "reset:dev": "dotenv -e src/config/env/development.env -- npx prisma migrate reset --skip-seed",
-    "reset:prod": "dotenv -e src/config/env/production.env -- npx prisma migrate reset --skip-seed",
+    "prisma:studio:dev": "dotenv -e .env.development prisma studio",
+    "prisma:studio:prod": "dotenv -e .env.production prisma studio",
+    "migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev --name",
+    "migrate:prod": "dotenv -e .env.production -- npx prisma migrate deploy",
+    "reset:dev": "dotenv -e .env.development -- npx prisma migrate reset --skip-seed",
+    "reset:prod": "dotenv -e .env.production -- npx prisma migrate reset --skip-seed",
     "seed": "dotenv -e src/config/env/development.env -- npx prisma db seed"
   },
   "dependencies": {
