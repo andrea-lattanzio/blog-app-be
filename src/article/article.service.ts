@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
 import { DatabaseService } from 'src/config/database/database.service';
-import { createChapters } from './utils/article.helpers';
+import { createChapters } from './utils/article.create.helpers';
 import { ArticleDto } from './dto/body';
 import { fullArticle } from './utils/article.query';
+import { UpdateArticleDto } from './dto/update-article.dto';
+import { updateChapters } from './utils/article.update.helpers';
 
 @Injectable()
 export class ArticleService {
   constructor(private readonly prisma: DatabaseService) {}
 
   /**
-   * 
+   *
    * @param createArticleDto Article info (including related entities).
    * @returns The newly created article, transformed into ArticleDto class.
    */
@@ -27,7 +28,7 @@ export class ArticleService {
   }
 
   /**
-   * 
+   *
    * @returns A list of all articles, transformed into ArticleDto class.
    */
   async findAll(): Promise<ArticleDto[]> {
@@ -50,6 +51,24 @@ export class ArticleService {
 
   /**
    * 
+   * @param id The article id.
+   * @param updateArticleDto The updated article info.
+   * @returns The updated article, transformed into ArticleDto class.
+   */
+  async update(id: string, updateArticleDto: UpdateArticleDto) {
+    const { chapters, ...articleData } = updateArticleDto;
+    const updatedArticle = await this.prisma.article.update({
+      where: { id },
+      data: {
+        ...articleData,
+        chapters: { update: updateChapters(updateArticleDto.chapters) },
+      },
+    });
+    return new ArticleDto(updatedArticle);
+  }
+
+  /**
+   *
    * @param id The article id.
    * @returns The deleted article.
    */

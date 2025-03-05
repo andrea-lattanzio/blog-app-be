@@ -16,6 +16,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ArticleDto } from './dto/body';
+import {
+  UpdateArticleDto
+} from './dto/update-article.dto';
 
 @ApiTags('article')
 @Controller('article')
@@ -24,7 +27,7 @@ export class ArticleController {
 
   /**
    * Creates a new article along with its related chapters, paragraphs and code sections.
-   * 
+   *
    * @param createArticleDto - The article information (including chapters, paragraphs and code sections).
    * @returns The newly created article without related entities.
    */
@@ -47,7 +50,7 @@ export class ArticleController {
   }
 
   /**
-   * 
+   *
    * @returns A list of all articles without related entities.
    */
   @Get()
@@ -61,7 +64,7 @@ export class ArticleController {
   }
 
   /**
-   * 
+   *
    * @param id The article id.
    * @returns A single article along with all the related entities.
    */
@@ -77,6 +80,21 @@ export class ArticleController {
 
   /**
    * 
+   * @param id The article id.
+   * @param updateArticleDto The updated article info (including updated related entities).
+   * @returns The updated article.
+   */
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Update Article',
+    description: 'This endpoint updates an article',
+  })
+  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+    return this.articleService.update(id, updateArticleDto);
+  }
+
+  /**
+   *
    * @param id The article id.
    * @returns The deleted article along with all the related entities.
    */

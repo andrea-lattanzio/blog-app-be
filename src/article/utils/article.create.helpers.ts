@@ -4,6 +4,11 @@ import {
   CreateParagraphDto,
 } from '../dto/create-article.dto';
 
+/**
+ * These functions are used to create the nested data structure for creating an article.
+ * The functions are moved to this seperate file to keep service method more readable.
+ */
+
 export const createChapters = (chapters: CreateChapterDto[]) => {
   return chapters.map((chapter) => ({
     title: chapter.title,
