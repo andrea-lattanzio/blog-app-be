@@ -21,7 +21,7 @@ export class ArticleService {
     const createdArticle = await this.prisma.article.create({
       data: {
         ...createArticleDto,
-        userId: userId,
+        userId,
         chapters: { create: createChapters(chapters) },
       },
     });

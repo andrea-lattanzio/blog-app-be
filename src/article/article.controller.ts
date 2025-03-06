@@ -18,6 +18,7 @@ import {
 import { ArticleDto } from './dto/body';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
+import { Public } from 'src/shared/decorators/public.decorator';
 
 @ApiTags('article')
 @Controller('article')
@@ -55,6 +56,7 @@ export class ArticleController {
    *
    * @returns A list of all articles without related entities.
    */
+  @Public()
   @Get()
   @ApiOperation({
     summary: 'Get Articles',
@@ -70,6 +72,7 @@ export class ArticleController {
    * @param id The article id.
    * @returns A single article along with all the related entities.
    */
+  @Public()
   @Get(':id')
   @ApiOperation({
     summary: 'Get Article',
