@@ -7,12 +7,14 @@ import { ArticleModule } from './article/article.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './shared/guards/jwt.guard';
 import { AuthModule } from './identity/auth/auth.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: getEnvPath() }),
     ArticleModule,
-    AuthModule
+    AuthModule,
+    CommentModule
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtGuard }],
