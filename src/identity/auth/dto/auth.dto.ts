@@ -1,4 +1,5 @@
 import { User } from '@prisma/client';
+import { Exclude, plainToInstance } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -34,4 +35,22 @@ export class RegisterRequestDto {
       'Password must contain at least one number and one special character',
   })
   password: string;
+}
+
+export class UserInfoDto {
+  email: string;
+  @Exclude()
+  id: string;
+  @Exclude()
+  password: string;
+  @Exclude()
+  authProvider: string;
+  @Exclude()
+  createdAt: string;
+  @Exclude()
+  updatedAt: string;
+
+  constructor(user: User) {
+    Object.assign(this, plainToInstance(UserInfoDto, user));
+  }
 }

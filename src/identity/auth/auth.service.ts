@@ -8,8 +8,9 @@ import {
 } from './constants/auth.constants';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
-import { User } from '../user/user.interface';
+import { User as IUser } from '../user/user.interface';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +27,7 @@ export class AuthService {
     return user;
   }
 
-  async login(validatedUser: User): Promise<LoginResponseDto> {
+  async login(validatedUser: IUser): Promise<LoginResponseDto> {
     const user = {
       email: validatedUser.email,
     };
@@ -44,7 +45,7 @@ export class AuthService {
       user.password,
       BCRYPT_HASH_SALT,
     );
-    const newUser: User = {
+    const newUser: IUser = {
       ...user,
       authProvider: "Local",
       password: hashedPassword,
@@ -54,7 +55,7 @@ export class AuthService {
     return this.login(createdUser);
   }
 
-  async profile(user: User) {
+  async profile(user: IUser): Promise<User> {
     if (!user) return;
     return await this.userSrv.findOneByEmail(user.email);
   }

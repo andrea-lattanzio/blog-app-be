@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginRequestDTO, LoginResponseDto, RegisterRequestDto } from './dto/auth.dto';
+import { LoginRequestDTO, LoginResponseDto, RegisterRequestDto, UserInfoDto } from './dto/auth.dto';
 import { User } from '../user/user.interface';
 import { Public } from 'src/shared/decorators/public.decorator';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
@@ -66,7 +66,8 @@ export class AuthController {
       'This endpoint returns the currently logged in user info',
   })
   @Get()
-  async profile(@GetUser() user: User) {
-    return this.authSrv.profile(user);
+  async profile(@GetUser() user: User): Promise<UserInfoDto> {
+    const currentUser = await this.authSrv.profile(user);
+    return new UserInfoDto(currentUser);
   }
 }
