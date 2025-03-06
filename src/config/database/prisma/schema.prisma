@@ -16,13 +16,14 @@ enum AuthProvider {
  * User model
  */
 model User {
-  id           String    @id @default(uuid())
-  email        String    @unique
+  id           String       @id @default(uuid())
+  email        String       @unique
   password     String?
   authProvider AuthProvider
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   Article      Article[]
+  Comment      Comment[]
 }
 
 /**
@@ -37,6 +38,7 @@ model Article {
   chapters    Chapter[]
   author      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
+  comments    Comment[]
 }
 
 /**
@@ -71,4 +73,27 @@ model CodeSection {
   caption     String?
   paragraphId String
   paragraph   Paragraph @relation(fields: [paragraphId], references: [id], onDelete: Cascade)
+}
+
+/**
+ * Comment model with: 
+ * one-to-many relationship with Comment for handling comment replies
+ * many-to-one relationship with Article (parent article)
+ * many-to-one relationship with User (poster of the comment)
+ */
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  article   Article @relation(fields: [articleID], references: [id], onDelete: Cascade)
+  articleID String
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId String?
+  replies  Comment[] @relation("CommentReplies")
 }
