@@ -76,7 +76,7 @@ model CodeSection {
 }
 
 /**
- * Comment model with: 
+ * Comment model with:
  * one-to-many relationship with Comment for handling comment replies
  * many-to-one relationship with Article (parent article)
  * many-to-one relationship with User (poster of the comment)
@@ -90,8 +90,8 @@ model Comment {
   article   Article @relation(fields: [articleID], references: [id], onDelete: Cascade)
   articleID String
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId String
+  author User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
   parentId String?
