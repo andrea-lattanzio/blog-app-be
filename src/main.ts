@@ -17,6 +17,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.enableCors();
 
   const swaggerConfig: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
     .setTitle('Blog-app API')
@@ -36,7 +37,7 @@ async function bootstrap() {
     JSON.stringify(swaggerDoc, null, 2),
     { encoding: 'utf8' },
   );
-  
+
   const port: number = configService.get<number>('PORT') || 3000;
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}/api`);
