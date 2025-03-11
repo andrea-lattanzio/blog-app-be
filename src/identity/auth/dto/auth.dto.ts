@@ -20,7 +20,7 @@ export class LoginRequestDTO {
 
 export class LoginResponseDto {
   token: string;
-  user: Partial<User>;
+  user: UserInfoDto;
 }
 
 export class RegisterRequestDto {
@@ -39,6 +39,8 @@ export class RegisterRequestDto {
 
 export class UserInfoDto {
   email: string;
+  createdAt: string;
+
   @Exclude()
   id: string;
   @Exclude()
@@ -46,11 +48,9 @@ export class UserInfoDto {
   @Exclude()
   authProvider: string;
   @Exclude()
-  createdAt: string;
-  @Exclude()
   updatedAt: string;
 
-  constructor(user: User) {
+  constructor(user: Partial<User>) {
     Object.assign(this, plainToInstance(UserInfoDto, user));
   }
 }
