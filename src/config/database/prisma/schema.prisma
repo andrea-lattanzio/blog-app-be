@@ -17,6 +17,8 @@ enum AuthProvider {
  */
 model User {
   id           String       @id @default(uuid())
+  name         String
+  lastnamne    String
   email        String       @unique
   password     String?
   authProvider AuthProvider
@@ -26,17 +28,24 @@ model User {
   Comment      Comment[]
 }
 
+enum ArticleTag {
+  Angular
+  React
+  Node
+}
+
 /**
  * Article model with a one-to-many relationship with Chapter
  */
 model Article {
-  id          String    @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   description String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  tag         ArticleTag
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   chapters    Chapter[]
-  author      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   comments    Comment[]
 }
