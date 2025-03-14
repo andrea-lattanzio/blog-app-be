@@ -1,10 +1,5 @@
 import { Comment } from '@prisma/client';
-import {
-  Exclude,
-  plainToClass,
-  plainToInstance,
-  Type,
-} from 'class-transformer';
+import { Exclude, plainToInstance, Type } from 'class-transformer';
 
 type FullComment = Comment & { replies?: Comment[] };
 
@@ -13,12 +8,10 @@ export class CommentDto {
   text: string;
   author: string;
   createdAt: string;
+  parentId?: string;
+
   @Exclude()
   updatedAt: string;
-  @Exclude()
-  parent?: Comment;
-  @Exclude()
-  parentId?: string;
   @Exclude()
   userId: string;
   @Type(() => CommentDto)

@@ -36,26 +36,6 @@ export class CommentController {
     return this.commentService.create(userId, createCommentDto);
   }
 
-  @Post('/reply')
-  @ApiOperation({
-    summary: 'Create a comment reply',
-    description: 'This endpoint creates a new reply to a comment',
-  })
-  @ApiBody({
-    description: 'Reply information',
-    type: CreateCommentDto,
-  })
-  @ApiCreatedResponse({
-    description: 'The reply was succesfully created',
-    type: CommentDto,
-  })
-  createReply(
-    @GetUser('id') userId: string,
-    @Body() createReplyDto: CreateReplyDto,
-  ) {
-    return this.commentService.createReply(userId, createReplyDto);
-  }
-
   @Public()
   @Get()
   @ApiOperation({
@@ -75,14 +55,5 @@ export class CommentController {
   })
   findOne(@Param('id') commentId: string) {
     return this.commentService.findOne(commentId);
-  }
-
-  @Delete(':id')
-  @ApiOperation({
-    summary: 'Delete Comment',
-    description: 'This endpoint deletes one comment',
-  })
-  remove(@Param('id') id: string) {
-    return this.commentService.remove(id);
   }
 }
