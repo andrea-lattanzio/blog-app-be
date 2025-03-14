@@ -18,7 +18,7 @@ enum AuthProvider {
 model User {
   id           String       @id @default(uuid())
   name         String
-  lastnamne    String
+  lastname     String
   email        String       @unique
   password     String?
   authProvider AuthProvider
