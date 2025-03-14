@@ -1,5 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { LoginResponseDto, RegisterRequestDto, UserInfoDto } from './dto/auth.dto';
+import {
+  LoginResponseDto,
+  RegisterRequestDto,
+  UserInfoDto,
+} from './dto/auth.dto';
 import {
   BCRYPT_HASH_SALT,
   ERROR_EMAIL_EXISTS,
@@ -33,7 +37,10 @@ export class AuthService {
       email: validatedUser.email,
       id: validatedUser.id,
     };
-    return { token: await this.jwtSrv.signAsync(payload), user: new UserInfoDto(user) };
+    return {
+      token: await this.jwtSrv.signAsync(payload),
+      user: new UserInfoDto(user),
+    };
   }
 
   async register(user: RegisterRequestDto): Promise<LoginResponseDto> {
@@ -45,7 +52,8 @@ export class AuthService {
     );
     const newUser: IUser = {
       ...user,
-      authProvider: "Local",
+      username: await this.userSrv.getUsername(user.name, user.lastname),
+      authProvider: 'Local',
       password: hashedPassword,
     };
     await this.userSrv.create(newUser);

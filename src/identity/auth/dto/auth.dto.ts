@@ -25,6 +25,12 @@ export class LoginResponseDto {
 
 export class RegisterRequestDto {
   @IsString()
+  @IsNotEmpty()
+  name: string;
+  @IsString()
+  @IsNotEmpty()
+  lastname: string;
+  @IsString()
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -40,6 +46,9 @@ export class RegisterRequestDto {
 export class UserInfoDto {
   email: string;
   createdAt: string;
+  name: string;
+  lastname: string;
+  username: string;
 
   @Exclude()
   id: string;
