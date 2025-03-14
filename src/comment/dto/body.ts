@@ -8,10 +8,11 @@ export class CommentDto {
   text: string;
   author: string;
   createdAt: string;
-  parentId?: string;
 
   @Exclude()
   updatedAt: string;
+  @Exclude()
+  parentId?: string;
   @Exclude()
   userId: string;
   @Type(() => CommentDto)
