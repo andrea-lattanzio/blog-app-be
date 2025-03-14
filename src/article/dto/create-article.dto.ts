@@ -1,4 +1,11 @@
-import { IsString, IsOptional, IsArray, ValidateNested, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+  IsNotEmpty,
+  IsEnum,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateCodeSectionDto {
@@ -37,6 +44,12 @@ export class CreateChapterDto {
   paragraphs: CreateParagraphDto[];
 }
 
+enum ArticleTag {
+  Angular,
+  React,
+  Node,
+}
+
 export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
@@ -46,9 +59,11 @@ export class CreateArticleDto {
   @IsNotEmpty()
   description: string;
 
+  @IsEnum(ArticleTag, { message: 'Tag must be either Angular React or Node' })
+  tag: string;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateChapterDto)
   chapters: CreateChapterDto[];
 }
-

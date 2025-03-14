@@ -43,10 +43,14 @@ export class ArticleDto {
   title: string;
   description: string;
   author: string;
+  tag: string;
+  updatedAt: string;
 
   @Exclude()
   createdAt: string;
-  updatedAt: string;
+  @Exclude()
+  userId: string;
+  
   @Type(() => ChapterDto)
   chapters: ChapterDto[];
 
