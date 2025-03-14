@@ -44,7 +44,7 @@ export class CreateChapterDto {
   paragraphs: CreateParagraphDto[];
 }
 
-enum ArticleTag {
+export enum ArticleTag {
   Angular,
   React,
   Node,

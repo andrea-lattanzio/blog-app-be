@@ -6,6 +6,8 @@ import { ArticleDto } from './dto/body';
 import { fullArticle } from './utils/article.query';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { updateChapters } from './utils/article.update.helpers';
+import { ArticleQueryDto } from './dto/article.query.dto';
+import { Article, Prisma } from '@prisma/client';
 
 @Injectable()
 export class ArticleService {
@@ -16,7 +18,10 @@ export class ArticleService {
    * @param createArticleDto Article info (including related entities).
    * @returns The newly created article, transformed into ArticleDto class.
    */
-  async create(userId: string, createArticleDto: CreateArticleDto): Promise<ArticleDto> {
+  async create(
+    userId: string,
+    createArticleDto: CreateArticleDto,
+  ): Promise<ArticleDto> {
     const { chapters } = createArticleDto;
     const createdArticle = await this.prisma.article.create({
       data: {
@@ -32,9 +37,31 @@ export class ArticleService {
    *
    * @returns A list of all articles, transformed into ArticleDto class.
    */
-  async findAll(): Promise<ArticleDto[]> {
-    const articles = await this.prisma.article.findMany();
+  async findAll(findArticleDto: ArticleQueryDto): Promise<ArticleDto[]> {
+    const { page, size } = findArticleDto;
+    const query: Prisma.ArticleFindManyArgs = {
+      where: {},
+      orderBy: {},
+      skip: (page - 1) * size | 0,
+      take: size || 10,
+    };
+
+    if (findArticleDto.tag) {
+      console.log(findArticleDto.tag);
+      query.where.tag = findArticleDto.tag;
+    }
+
+    const articles = await this.prisma.article.findMany(query);
+    console.log(articles);
     return ArticleDto.fromEntities(articles);
+  }
+
+  async count(findArticleDto: ArticleQueryDto): Promise<number> {
+    return this.prisma.article.count({
+      where: {
+        tag: findArticleDto.tag,
+      },
+    });
   }
 
   /**
@@ -51,7 +78,7 @@ export class ArticleService {
   }
 
   /**
-   * 
+   *
    * @param id The article id.
    * @param updateArticleDto The updated article info.
    * @returns The updated article, transformed into ArticleDto class.

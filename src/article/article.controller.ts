@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -19,6 +20,8 @@ import { ArticleDto } from './dto/body';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { Public } from 'src/shared/decorators/public.decorator';
+import { ArticleQueryDto } from './dto/article.query.dto';
+import { paginateResponse } from 'src/shared/presenter/paginateResponse';
 
 @ApiTags('article')
 @Controller('article')
@@ -63,8 +66,22 @@ export class ArticleController {
     description:
       'This endpoint returns a list of all articles without related entities',
   })
-  findAll() {
-    return this.articleService.findAll();
+  async findAll(@Query() findArticleDto: ArticleQueryDto) {
+    const { page } = findArticleDto;
+
+    let total: number = 0;
+    let items: ArticleDto[] = [];
+    try {
+      [total, items] = await Promise.all([
+        this.articleService.count(findArticleDto),
+        this.articleService.findAll(findArticleDto),
+      ]);
+    } catch (error) {
+      console.error(error);
+      return paginateResponse<ArticleDto>(page, [], total, true);
+    }
+
+    return paginateResponse<ArticleDto>(page, items, total);
   }
 
   /**
