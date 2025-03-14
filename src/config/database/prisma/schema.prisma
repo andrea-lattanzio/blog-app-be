@@ -19,6 +19,7 @@ model User {
   id           String       @id @default(uuid())
   name         String
   lastname     String
+  username     String       @unique
   email        String       @unique
   password     String?
   authProvider AuthProvider
@@ -28,12 +29,6 @@ model User {
   Comment      Comment[]
 }
 
-enum ArticleTag {
-  Angular
-  React
-  Node
-}
-
 /**
  * Article model with a one-to-many relationship with Chapter
  */
@@ -41,7 +36,7 @@ model Article {
   id          String     @id @default(uuid())
   title       String
   description String
-  tag         ArticleTag
+  tag         String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   chapters    Chapter[]
