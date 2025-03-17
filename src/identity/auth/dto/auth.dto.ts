@@ -49,6 +49,7 @@ export class UserInfoDto {
   name: string;
   lastname: string;
   username: string;
+  fullname: string;
 
   @Exclude()
   id: string;
@@ -61,5 +62,6 @@ export class UserInfoDto {
 
   constructor(user: Partial<User>) {
     Object.assign(this, plainToInstance(UserInfoDto, user));
+    this.fullname = `${this.name} ${this.lastname}`;
   }
 }
