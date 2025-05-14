@@ -1,22 +1,32 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginRequestDTO, LoginResponseDto, RegisterRequestDto, UserInfoDto } from './dto/auth.dto';
+import {
+  LoginRequestDTO,
+  LoginResponseDto,
+  RegisterRequestDto,
+  UserInfoDto,
+} from './dto/auth.dto';
 import { User } from '../user/user.interface';
 import { Public } from 'src/shared/decorators/public.decorator';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { LocalAuthGuard } from 'src/shared/guards/local.guard';
 import { ApiBody, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-
+import { UserService } from '../user/user.service';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authSrv: AuthService) {}
+  constructor(
+    private readonly authSrv: AuthService,
+    private readonly userSrv: UserService,
+  ) {}
 
   @Public()
   @UseGuards(LocalAuthGuard)
@@ -59,15 +69,24 @@ export class AuthController {
     return this.authSrv.register(registerRequestDto);
   }
 
-
   @ApiOperation({
-    summary: 'Register',
-    description:
-      'This endpoint returns the currently logged in user info',
+    summary: 'profile',
+    description: 'This endpoint returns the currently logged in user info',
   })
   @Get()
   async profile(@GetUser() user: User): Promise<UserInfoDto> {
     const currentUser = await this.authSrv.profile(user);
     return new UserInfoDto(currentUser);
   }
+
+  @ApiOperation({
+    summary: 'Delete',
+    description: 'This endpoint deletes a user',
+  })
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string): Promise<UserInfoDto> {
+    return await this.userSrv.remove(id);
+  }
+
+
 }

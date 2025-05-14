@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/config/database/database.service';
 import { User } from './user.interface';
 import { randomBytes } from 'crypto';
+import { UserInfoDto } from '../auth/dto/auth.dto';
 
 @Injectable()
 export class UserService {
@@ -9,6 +10,18 @@ export class UserService {
 
   async create(user: User) {
     return await this.prisma.user.create({ data: user });
+  }
+
+  /**
+   *
+   * @param id The article id.
+   * @returns The deleted article.
+   */
+  async remove(id: string): Promise<UserInfoDto> {
+    const deletedUser = await this.prisma.user.delete({
+      where: { id },
+    });
+    return new UserInfoDto(deletedUser);
   }
 
   async findOneByEmail(email: string) {
