@@ -47,12 +47,10 @@ export class ArticleService {
     };
 
     if (findArticleDto.tag) {
-      console.log(findArticleDto.tag);
       query.where.tag = findArticleDto.tag;
     }
 
     const articles = await this.prisma.article.findMany(query);
-    console.log(articles);
     return ArticleDto.fromEntities(articles);
   }
 
