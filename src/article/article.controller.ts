@@ -85,6 +85,20 @@ export class ArticleController {
   }
 
   /**
+   * @returns The latest article
+   */
+  @Public()
+  @Get('/latest-three')
+  @ApiOperation({
+    summary: 'Get Article',
+    description:
+      'This endpoint returns a single article along with all the related entities',
+  })
+  async getLatestThree(): Promise<ArticleDto[]> {
+    return this.articleService.getLatestThree();
+  }
+
+  /**
    *
    * @param id The article id.
    * @returns A single article along with all the related entities.

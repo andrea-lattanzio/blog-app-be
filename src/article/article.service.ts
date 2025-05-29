@@ -63,6 +63,21 @@ export class ArticleService {
   }
 
   /**
+   * 
+   * @returns The latest three articles ordered by creation date
+   */
+  async getLatestThree(): Promise<ArticleDto[]> {
+    const articles = await this.prisma.article.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 3
+    });
+
+    return ArticleDto.fromEntities(articles);
+  }
+
+  /**
    *
    * @param id The article id.
    * @returns A single article along with all the related entities.

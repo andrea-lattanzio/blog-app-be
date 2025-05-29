@@ -45,9 +45,9 @@ export class CreateChapterDto {
 }
 
 export enum ArticleTag {
-  Angular,
-  React,
-  Node,
+  angular,
+  react,
+  node,
 }
 
 export class CreateArticleDto {
@@ -59,7 +59,7 @@ export class CreateArticleDto {
   @IsNotEmpty()
   description: string;
 
-  @IsEnum(ArticleTag, { message: 'Tag must be either Angular React or Node' })
+  @IsEnum(ArticleTag, { message: 'Tag must be either angular react or node' })
   tag: string;
 
   @IsArray()
