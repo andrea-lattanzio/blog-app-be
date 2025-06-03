@@ -106,7 +106,7 @@ model Comment {
  * Newsletter subscribers table:
  * stores the email addresses to send the emails to
  */
-model NewsletterSubscribption {
+model NewsletterSubscription {
   id        String   @id @default(uuid())
   email     String
   createdAt DateTime @default(now())
