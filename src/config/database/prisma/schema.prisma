@@ -33,14 +33,14 @@ model User {
  * Article model with a one-to-many relationship with Chapter
  */
 model Article {
-  id          String     @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String
   tag         String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   chapters    Chapter[]
-  author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   comments    Comment[]
 }
@@ -100,4 +100,15 @@ model Comment {
   parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
   parentId String?
   replies  Comment[] @relation("CommentReplies")
+}
+
+/**
+ * Newsletter subscribers table:
+ * stores the email addresses to send the emails to
+ */
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String
+  createdAt DateTime @default(now())
+  is_active Boolean  @default(true)
 }
