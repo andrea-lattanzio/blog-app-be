@@ -8,13 +8,26 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './shared/guards/jwt.guard';
 import { AuthModule } from './identity/auth/auth.module';
 import { CommentModule } from './comment/comment.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: getEnvPath() }),
     ArticleModule,
     AuthModule,
-    CommentModule
+    CommentModule,
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        transport: {
+          host: configService.get<string>('EMAIL_HOST'),
+          auth: {
+            user: configService.get<string>('EMAIL_USERNAME'),
+            pass: configService.get<string>('EMAIL_PASSWORD'),
+          },
+        },
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtGuard }],
