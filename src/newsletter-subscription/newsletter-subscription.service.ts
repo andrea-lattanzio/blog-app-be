@@ -3,7 +3,8 @@ import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscri
 import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
 import { DatabaseService } from 'src/config/database/database.service';
 import { NewsletterSubscription } from '@prisma/client';
-import { MailOptions, MailSenderService } from 'src/mailer/mailer.service';
+import { MailSenderService } from 'src/mailer/mailer.service';
+import { MailOptions } from 'src/mailer/mail.utils';
 
 interface WelcomeEmailContext {
   email: string;
@@ -28,7 +29,6 @@ export class NewsletterSubscriptionService {
     });
 
     if (subscription) {
-      console.log('sas');
       const welcomeEmailOptions: MailOptions<WelcomeEmailContext> = {
         subject: 'Newsletter subscription confirmed.',
         template: 'welcome',
@@ -37,7 +37,8 @@ export class NewsletterSubscriptionService {
         },
       };
       this.mailer.send(
-        [createNewsletterSubscriptionDto.email],
+        // [createNewsletterSubscriptionDto.email]
+        ["andrealattanziodedona@gmail.com"],
         welcomeEmailOptions,
       );
     } else {

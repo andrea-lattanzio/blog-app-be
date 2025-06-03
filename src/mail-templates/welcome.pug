@@ -1,66 +1,97 @@
 doctype html
 html(lang="en")
   head
-    meta(charset="utf-8")
-    title Welcome to Our App!
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Welcome to My Newsletter!
     style.
+      /* Basic Reset & Body Styles */
       body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        color: #fff; /* Changed text color to white for better visibility on black background */
-        background-color: #000; /* Set background to black */
-        margin: 0; /* Reset default body margins */
-        padding: 0; /* Reset default body padding */
-        border-radius: 20px;
-        font-size: 20px;
+        font-family: 'Playfair', sans-serif; /* Fallback to sans-serif */
+        background-color: #1d1d1d; /* Light gray background */
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        width: 100% !important;
       }
+      /* Container for the main content */
       .container {
         max-width: 600px;
         margin: 0 auto;
-        padding: 80px;
-        /* Removed border */
+        background-color: #343434; /* White background */
+        border-radius: 12px; /* Equivalent to rounded-xl */
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-lg */
+        text-align: center;
+        overflow: hidden; /* Important for border-radius to apply to the image */
       }
-      .header {
-        text-align: center; /* Center the image */
-        margin-bottom: 20px; /* Add space below the header */
-      }
+       /* Header image container */
       .header-image-container {
-        background-image: url('cid:header-image');
+        display: block; /* Ensures it takes full width */
+        width: 100%;
+        height: 100px; /* Set a fixed height or adjust as needed */
+        background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
         background-repeat: no-repeat;
-        background-size: contain;
-        height: 100px;
-        width: 600px;
+        background-size: cover;
+        background-position: center; /* Center the image */
+        /* No margin-bottom here, it will be handled by padding below the image */
       }
-      .greeting {
-        font-size: 30px;
-        font-weight: bold;
-        margin-bottom: 10px;
+      /* Heading styles */
+      .h1 {
+        font-family: 'Playfair', sans-serif;
+        font-size: 30px; /* Equivalent to text-3xl */
+        line-height: 1.2;
+        font-weight: 700; /* Equivalent to font-bold */
+        color: #f6f6f6; /* Equivalent to gray-900 */
+        margin-bottom: 16px; /* Equivalent to mb-4 */
+        padding: 0 25px; /* Add horizontal padding for text */
       }
-      .message {
-        margin-bottom: 15px;
+      /* Paragraph styles */
+      .p {
+        font-size: 18px; /* Equivalent to text-lg */
+        line-height: 1.6; /* Equivalent to leading-relaxed */
+        color: #929292; /* Equivalent to gray-700 */
+        margin-bottom: 24px; /* Equivalent to mb-6 */
+        padding: 0 25px; /* Add horizontal padding for text */
       }
+      /* Button styles */
       .button {
         display: inline-block;
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
+        background-color: #0a0a0a; /* Equivalent to bg-indigo-600 */
+        color: #cdcdcd; /* Equivalent to text-white */
+        font-weight: 600; /* Equivalent to font-semibold */
+        padding: 12px 24px; /* Equivalent to py-3 px-6 */
+        border-radius: 8px; /* Equivalent to rounded-lg */
         text-decoration: none;
-        border-radius: 5px;
+        border: 2px solid #676767;
+        margin-bottom: 25px; /* Add bottom margin to the button */
       }
-      .footer {
-        margin-top: 20px;
-        font-size: 12px;
-        color: #777;
+      /* Responsive adjustments for smaller screens */
+      @media only screen and (max-width: 600px) {
+        .container {
+          border-radius: 0; /* Remove border-radius on small screens if desired */
+        }
+        .h1, .p, .p-small {
+          padding: 0 16px; /* Adjust padding for smaller screens */
+        }
+        .h1 {
+          font-size: 28px; /* Adjust font size */
+        }
+        .p {
+          font-size: 16px; /* Adjust font size */
+        }
       }
   body
-    .container
-      .header
-        div.header-image-container
-      p.greeting Hello #{email},
-      p.message Thank you for joining our amazing app! We're thrilled to have you.
-      p.message Get started by clicking the button below:
-      p
-        a.button(href="https://your-app.com/dashboard") Go to Dashboard
-      p.footer Best regards,
-        br
-        | The Your App Team
+    table(width="100%", cellpadding="0", cellspacing="0", border="0")
+      tr
+        td(align="center", style="padding: 16px;")
+          table.container(width="100%", cellpadding="0", cellspacing="0", border="0")
+            tr
+              td(style="padding: 0;")
+                div.header-image-container
+            tr
+              td(style="padding: 25px 0 0 0;")
+                h1.h1 Welcome to My Newsletter!
+                p.p Thank you for subscribing. You will now receive an email notification every time a new article is published.
+                div(style="margin-top: 32px;")
+                  a.button(href="#") Visit My Website
