@@ -1,0 +1,66 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Welcome to Our App!
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #fff; /* Changed text color to white for better visibility on black background */
+        background-color: #000; /* Set background to black */
+        margin: 0; /* Reset default body margins */
+        padding: 0; /* Reset default body padding */
+        border-radius: 20px;
+        font-size: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 80px;
+        /* Removed border */
+      }
+      .header {
+        text-align: center; /* Center the image */
+        margin-bottom: 20px; /* Add space below the header */
+      }
+      .header-image-container {
+        background-image: url('cid:header-image');
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 100px;
+        width: 600px;
+      }
+      .greeting {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .message {
+        margin-bottom: 15px;
+      }
+      .button {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #777;
+      }
+  body
+    .container
+      .header
+        div.header-image-container
+      p.greeting Hello #{email},
+      p.message Thank you for joining our amazing app! We're thrilled to have you.
+      p.message Get started by clicking the button below:
+      p
+        a.button(href="https://your-app.com/dashboard") Go to Dashboard
+      p.footer Best regards,
+        br
+        | The Your App Team

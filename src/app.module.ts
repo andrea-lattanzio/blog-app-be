@@ -10,6 +10,7 @@ import { AuthModule } from './identity/auth/auth.module';
 import { CommentModule } from './comment/comment.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { NewsletterSubscriptionModule } from './newsletter-subscription/newsletter-subscription.module';
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
 @Module({
   imports: [
@@ -27,6 +28,13 @@ import { NewsletterSubscriptionModule } from './newsletter-subscription/newslett
             pass: configService.get<string>('EMAIL_PASSWORD'),
           },
         },
+        template: {
+          dir: __dirname + '/mail-templates',
+          adapter: new PugAdapter({ inlineCssEnabled: true }),
+          options: {
+            strict: false
+          }
+        }
       }),
       inject: [ConfigService]
     }),
