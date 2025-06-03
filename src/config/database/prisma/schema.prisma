@@ -108,7 +108,7 @@ model Comment {
  */
 model NewsletterSubscription {
   id        String   @id @default(uuid())
-  email     String
+  email     String   @unique
   createdAt DateTime @default(now())
   is_active Boolean  @default(true)
 }

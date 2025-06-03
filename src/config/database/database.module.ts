@@ -3,7 +3,7 @@ import { DatabaseService } from './database.service';
 
 /**
  * Database module
- * exports DatabaseService to be used in App module
+ * exports DatabaseService to be used in other modules module
  */
 @Module({
   providers: [DatabaseService],
