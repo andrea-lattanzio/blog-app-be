@@ -3,12 +3,9 @@ import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscri
 import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
 import { DatabaseService } from 'src/config/database/database.service';
 import { NewsletterSubscription } from '@prisma/client';
-import { MailSenderService } from 'src/mailer/mailer.service';
+import { baseEmailContext, MailSenderService } from 'src/mailer/mailer.service';
 import { MailOptions } from 'src/mailer/mail.utils';
 
-interface WelcomeEmailContext {
-  email: string;
-}
 @Injectable()
 export class NewsletterSubscriptionService {
   constructor(
@@ -29,16 +26,12 @@ export class NewsletterSubscriptionService {
     });
 
     if (subscription) {
-      const welcomeEmailOptions: MailOptions<WelcomeEmailContext> = {
+      const welcomeEmailOptions: MailOptions<baseEmailContext> = {
         subject: 'Newsletter subscription confirmed.',
         template: 'welcome',
-        context: {
-          email: createNewsletterSubscriptionDto.email,
-        },
       };
       this.mailer.send(
-        // [createNewsletterSubscriptionDto.email]
-        ["andrealattanziodedona@gmail.com"],
+        [createNewsletterSubscriptionDto.email],
         welcomeEmailOptions,
       );
     } else {
