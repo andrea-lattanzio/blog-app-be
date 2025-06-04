@@ -38,7 +38,7 @@ export class ArticleService {
    * @returns A list of all articles, transformed into ArticleDto class.
    */
   async findAll(findArticleDto: ArticleQueryDto): Promise<ArticleDto[]> {
-    const { page, size } = findArticleDto;
+    const { page, size, tag, titleContains, sortBy } = findArticleDto;
     const query: Prisma.ArticleFindManyArgs = {
       where: {},
       orderBy: {},
@@ -46,8 +46,27 @@ export class ArticleService {
       take: size || 10,
     };
 
-    if (findArticleDto.tag) {
-      query.where.tag = findArticleDto.tag;
+    if (tag) {
+      query.where.tag = tag;
+    }
+
+    if (titleContains) {
+      query.where.title = {
+        contains: titleContains,
+        mode: 'insensitive',
+      };
+    }
+
+    if (sortBy) {
+      if (sortBy === 'views') {
+        query.orderBy = {
+          views: 'desc',
+        };
+      }
+    } else {
+      query.orderBy = {
+        createdAt: 'asc',
+      };
     }
 
     const articles = await this.prisma.article.findMany(query);
