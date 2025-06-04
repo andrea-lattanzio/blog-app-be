@@ -37,14 +37,14 @@ export class CommentController {
   }
 
   @Public()
-  @Get()
+  @Get('/article/:id')
   @ApiOperation({
     summary: 'Get Comments',
     description:
       'This endpoint returns a list of all comments without their replies',
   })
-  findAll() {
-    return this.commentService.findAll();
+  findAll(@Param('id') articleId: string) {
+    return this.commentService.findAll(articleId);
   }
 
   @Public()

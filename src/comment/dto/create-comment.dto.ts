@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, IsString, IsUUID, Length } from 'class-validato
 
 export class CreateCommentDto {
   @IsUUID()
-  articleID: string;
+  articleId: string;
 
   @IsOptional()
   @IsUUID()
