@@ -37,6 +37,7 @@ model Article {
   title       String
   description String
   tag         String
+  views       Int       @default(0)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   chapters    Chapter[]

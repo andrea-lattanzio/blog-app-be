@@ -42,7 +42,7 @@ export class ArticleService {
     const query: Prisma.ArticleFindManyArgs = {
       where: {},
       orderBy: {},
-      skip: (page - 1) * size | 0,
+      skip: ((page - 1) * size) | 0,
       take: size || 10,
     };
 
@@ -63,7 +63,7 @@ export class ArticleService {
   }
 
   /**
-   * 
+   *
    * @returns The latest three articles ordered by creation date
    */
   async getLatestThree(): Promise<ArticleDto[]> {
@@ -71,7 +71,7 @@ export class ArticleService {
       orderBy: {
         createdAt: 'desc',
       },
-      take: 3
+      take: 3,
     });
 
     return ArticleDto.fromEntities(articles);
@@ -79,15 +79,27 @@ export class ArticleService {
 
   /**
    *
-   * @param id The article id.
+   * @param articleId The article id.
    * @returns A single article along with all the related entities.
    */
-  async findOne(id: string): Promise<ArticleDto> {
+  async findOne(articleId: string): Promise<ArticleDto> {
     const article = await this.prisma.article.findUniqueOrThrow({
-      where: { id },
+      where: { id: articleId },
       include: fullArticle.include,
     });
+    this.updateViews(articleId);
     return new ArticleDto(article);
+  }
+
+  private async updateViews(articleId: string) {
+    await this.prisma.article.update({
+      where: { id: articleId },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
   }
 
   /**
