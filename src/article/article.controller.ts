@@ -85,7 +85,7 @@ export class ArticleController {
   }
 
   /**
-   * @returns The latest article
+   * @returns The latest three articles
    */
   @Public()
   @Get('/latest-three')
