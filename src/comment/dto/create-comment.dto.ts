@@ -1,8 +1,9 @@
 import { IsNotEmpty, IsOptional, IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateCommentDto {
+  @IsOptional()
   @IsUUID()
-  articleId: string;
+  articleId?: string;
 
   @IsOptional()
   @IsUUID()
