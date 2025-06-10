@@ -10,7 +10,8 @@ import { AuthModule } from './identity/auth/auth.module';
 import { CommentModule } from './comment/comment.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { NewsletterSubscriptionModule } from './newsletter-subscription/newsletter-subscription.module';
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import mailerModuleConfig from './config/modules-imports-config/mailer.config';
+
 
 @Module({
   imports: [
@@ -18,26 +19,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
     ArticleModule,
     AuthModule,
     CommentModule,
-    MailerModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        transport: {
-          host: configService.get<string>('EMAIL_HOST'),
-          auth: {
-            user: configService.get<string>('EMAIL_USERNAME'),
-            pass: configService.get<string>('EMAIL_PASSWORD'),
-          },
-        },
-        template: {
-          dir: __dirname + '/mail-templates',
-          adapter: new PugAdapter({ inlineCssEnabled: true }),
-          options: {
-            strict: false
-          }
-        }
-      }),
-      inject: [ConfigService]
-    }),
+    MailerModule.forRootAsync(mailerModuleConfig),
     NewsletterSubscriptionModule,
   ],
   controllers: [AppController],
