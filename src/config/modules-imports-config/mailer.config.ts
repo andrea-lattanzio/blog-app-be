@@ -12,7 +12,7 @@ const mailerModuleConfig = {
       },
     },
     template: {
-      dir: __dirname + '/mail-templates',
+      dir: __dirname + '../../../mail-templates',
       adapter: new PugAdapter({ inlineCssEnabled: true }),
       options: {
         strict: false,

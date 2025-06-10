@@ -30,6 +30,7 @@ export class NewsletterSubscriptionService {
         subject: 'Newsletter subscription confirmed.',
         template: 'welcome',
       };
+
       this.mailer.send(
         [createNewsletterSubscriptionDto.email],
         welcomeEmailOptions,

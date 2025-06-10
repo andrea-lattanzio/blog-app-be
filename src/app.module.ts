@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { join } from 'path';
 import { ArticleModule } from './article/article.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './shared/guards/jwt.guard';
