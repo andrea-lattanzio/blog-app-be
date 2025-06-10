@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { ArticleModule } from './article/article.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -11,11 +10,11 @@ import { CommentModule } from './comment/comment.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { NewsletterSubscriptionModule } from './newsletter-subscription/newsletter-subscription.module';
 import mailerModuleConfig from './config/modules-imports-config/mailer.config';
-
+import { ConfigModule } from './config/config.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: getEnvPath() }),
+    ConfigModule,
     ArticleModule,
     AuthModule,
     CommentModule,
@@ -26,9 +25,3 @@ import mailerModuleConfig from './config/modules-imports-config/mailer.config';
   providers: [AppService, { provide: APP_GUARD, useClass: JwtGuard }],
 })
 export class AppModule {}
-
-function getEnvPath(): string {
-  const configService = new ConfigService();
-  const env: string = configService.get<string>('NODE_ENV') || 'development';
-  return join(`.env.${env}`);
-}
