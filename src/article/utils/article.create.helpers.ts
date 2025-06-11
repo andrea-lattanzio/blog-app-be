@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import {
   CreateChapterDto,
   CreateCodeSectionDto,
@@ -9,21 +10,21 @@ import {
  * The functions are moved to this seperate file to keep service method more readable.
  */
 
-export const createChapters = (chapters: CreateChapterDto[]) => {
+export const createChapters = (chapters: CreateChapterDto[]): Prisma.ChapterCreateWithoutArticleInput[] => {
   return chapters.map((chapter) => ({
     title: chapter.title,
     paragraphs: { create: createChapterContent(chapter.paragraphs) },
   }));
 };
 
-const createChapterContent = (paragraphs: CreateParagraphDto[]) => {
+const createChapterContent = (paragraphs: CreateParagraphDto[]): Prisma.ParagraphCreateWithoutChapterInput[] => {
   return paragraphs.map((paragraph) => ({
     text: paragraph.text,
     codeSections: { create: createCodeSection(paragraph.codeSections) },
   }));
 };
 
-const createCodeSection = (sections: CreateCodeSectionDto[]) => {
+const createCodeSection = (sections: CreateCodeSectionDto[]): Prisma.CodeSectionCreateWithoutParagraphInput[] => {
   return sections.map((section) => ({
     language: section.language,
     code: section.code,

@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import {
   UpdateChapterDto,
   UpdateCodeSectionDto,
@@ -9,7 +10,7 @@ import {
  * The functions are moved to this seperate file to keep service method more readable.
  */
 
-export const updateChapters = (chapters: UpdateChapterDto[]) => {
+export const updateChapters = (chapters: UpdateChapterDto[]): Prisma.ChapterUpdateWithWhereUniqueWithoutArticleInput[] => {
   console.log('updating chapters');
   return chapters?.map((chapter) => ({
     where: { id: chapter.id },
@@ -22,7 +23,7 @@ export const updateChapters = (chapters: UpdateChapterDto[]) => {
   }));
 };
 
-export const updateParagraphs = (paragraphs: UpdateParagraphDto[]) => {
+export const updateParagraphs = (paragraphs: UpdateParagraphDto[]): Prisma.ParagraphUpdateWithWhereUniqueWithoutChapterInput[] => {
   console.log('updating paragraphs');
   return paragraphs.map((paragraph) => ({
     where: { id: paragraph.id },
@@ -39,7 +40,7 @@ export const updateParagraphs = (paragraphs: UpdateParagraphDto[]) => {
   }));
 };
 
-export const updateCodeSections = (codeSections: UpdateCodeSectionDto[]) => {
+export const updateCodeSections = (codeSections: UpdateCodeSectionDto[]): Prisma.CodeSectionUpdateWithWhereUniqueWithoutParagraphInput[] => {
   console.log('updating code sections');
   return codeSections.map((section) => ({
     where: { id: section.id },
