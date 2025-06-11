@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { writeFileSync } from 'fs';
 import helmet from 'helmet';
+import { PrismaExceptionsFilter } from './shared/exception-filters/PrismaExceptionFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,6 +21,8 @@ async function bootstrap() {
   );
   app.enableCors();
   app.use(helmet({ contentSecurityPolicy: false }));
+
+  app.useGlobalFilters(new PrismaExceptionsFilter());
 
 
   const swaggerConfig: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
