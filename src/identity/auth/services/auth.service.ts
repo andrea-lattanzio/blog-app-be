@@ -1,20 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import {
-  LoginResponseDto,
-  RegisterRequestDto,
-  UserInfoDto,
-} from './dto/auth.dto';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
+import { User as IUser } from 'src/identity/user/user.interface';
+import { UserService } from 'src/identity/user/user.service';
 import {
   BCRYPT_HASH_SALT,
   ERROR_EMAIL_EXISTS,
   ERROR_INVALID_CREDENTIALS,
   ERROR_USER_NOT_FOUND,
-} from './constants/auth.constants';
-import { UserService } from '../user/user.service';
-import * as bcrypt from 'bcrypt';
-import { User as IUser } from '../user/user.interface';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+} from '../constants/auth.constants';
+import {
+  LoginResponseDto,
+  UserInfoDto,
+  RegisterRequestDto,
+} from '../dto/auth.dto';
 
 @Injectable()
 export class AuthService {

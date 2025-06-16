@@ -14,13 +14,13 @@ import {
   LoginResponseDto,
   RegisterRequestDto,
   UserInfoDto,
-} from './dto/auth.dto';
-import { User } from '../user/user.interface';
+} from '../dto/auth.dto';
+import { User } from '../../user/user.interface';
 import { Public } from 'src/shared/decorators/public.decorator';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { LocalAuthGuard } from 'src/shared/guards/local.guard';
 import { ApiBody, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { UserService } from '../user/user.service';
+import { UserService } from '../../user/user.service';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -87,6 +87,4 @@ export class AuthController {
   async deleteUser(@Param('id') id: string): Promise<UserInfoDto> {
     return await this.userSrv.remove(id);
   }
-
-
 }
