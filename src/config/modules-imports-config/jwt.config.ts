@@ -3,13 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 const JwtModuleConfig = {
   imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
-    secret: configService.get<string>('JWT_SECRET'),
+    secret: configService.get<string>('auth.secret'),
     signOptions: {
-      expiresIn: parseInt(
-        configService.getOrThrow<string>(
-          'ACCESS_TOKEN_VALIDITY_DURATION_IN_SEC',
-        ),
-      ),
+      expiresIn: parseInt(configService.getOrThrow<string>('auth.expiration')),
     },
   }),
   inject: [ConfigService],

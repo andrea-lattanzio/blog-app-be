@@ -5,10 +5,10 @@ const mailerModuleConfig = {
   imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     transport: {
-      host: configService.get<string>('EMAIL_HOST'),
+      host: configService.get<string>('mail.host'),
       auth: {
-        user: configService.get<string>('EMAIL_USERNAME'),
-        pass: configService.get<string>('EMAIL_PASSWORD'),
+        user: configService.get<string>('mail.user'),
+        pass: configService.get<string>('mail.pass'),
       },
     },
     template: {

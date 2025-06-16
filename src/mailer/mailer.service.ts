@@ -15,7 +15,7 @@ export class MailSenderService {
     private readonly mailerSrv: MailerService,
     private readonly configSrv: ConfigService,
   ) {
-    this.frontendBaseUri = this.configSrv.get<string>('FRONTEND_BASE_URI');
+    this.frontendBaseUri = this.configSrv.get<string>('frontend.baseUri');
   }
 
   send<TContext>(
@@ -28,7 +28,7 @@ export class MailSenderService {
 
     usersToNotify.forEach((email) => {
       this.mailerSrv.sendMail({
-        from: 'Andrea Lattanzio <andrealattanziodedona@gmail.com>',
+        from: this.configSrv.get('mail.from'),
         to: email,
         subject: options.subject,
         context: context,
