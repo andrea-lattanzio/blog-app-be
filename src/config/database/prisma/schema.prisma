@@ -113,3 +113,17 @@ model NewsletterSubscription {
   createdAt DateTime @default(now())
   is_active Boolean  @default(true)
 }
+
+
+/**
+ * Password reset table to keep track of password changes
+*/
+model PasswordResetLog {
+  id        String   @id @default(uuid())
+  email     String
+  token     String
+  used      Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
