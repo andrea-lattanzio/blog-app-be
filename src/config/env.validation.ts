@@ -37,10 +37,10 @@ export class EnvironmentVariables {
   EMAIL_HOST: string;
 
   @IsString()
-  EMAIL_USERNAME: string;
+  EMAIL_USER: string;
 
   @IsString()
-  EMAIL_PASSWORD: string;
+  EMAIL_PASS: string;
 
   @IsEmail()
   EMAIL_FROM: string;

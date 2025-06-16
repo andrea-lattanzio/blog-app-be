@@ -4,11 +4,11 @@ export default (): Record<string, object> => ({
     port: process.env.PORT,
   },
   database: {
-    uri: process.env.MONGODB_URI,
+    uri: process.env.DATABASE_URL,
   },
   auth: {
     secret: process.env.JWT_SECRET,
-    expiration: process.env.JWT_EXPIRATION_TIME,
+    expiration: process.env.ACCESS_TOKEN_VALIDITY_DURATION_IN_SEC,
   },
   mail: {
     host: process.env.EMAIL_HOST,
