@@ -7,6 +7,10 @@ import { PasswordResetService } from "../services/password.reset.service";
 import { RequestResetPasswordDto, ResetPasswordDto } from "../dto/passowrd.reset.dto";
 import { MailOptions } from "src/mailer/mail.utils";
 
+export interface ResetPasswordMailContext {
+  passwordResetLink: string;
+}
+
 @ApiTags("Password Reset")
 @Public()
 @Controller("reset-password")
@@ -20,7 +24,7 @@ export class PasswordResetController {
   @Post("request")
   async requestReset(@Body() { email }: RequestResetPasswordDto): Promise<void> {
     const token: string = await this.passwordResetSrv.createResetToken(email);
-    const resetPasswordEmailOptions: MailOptions = {
+    const resetPasswordEmailOptions: MailOptions<ResetPasswordMailContext> = {
       subject: "Reset your password.",
       template: "reset-password",
       context: { passwordResetLink: this.passwordResetSrv.generateResetPasswordLink(token) },

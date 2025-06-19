@@ -4,14 +4,14 @@ import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscri
 import { DatabaseService } from 'src/config/database/database.service';
 import { NewsletterSubscription } from '@prisma/client';
 import { MailSenderService } from 'src/mailer/mailer.service';
-import { MailOptions } from 'src/mailer/mail.utils';
+import { BaseMailContext, MailOptions } from 'src/mailer/mail.utils';
 
 @Injectable()
 export class NewsletterSubscriptionService {
   constructor(
     private readonly prisma: DatabaseService,
     private readonly mailer: MailSenderService,
-  ) {}
+  ) { }
 
   /**
    * Receives the email and creates a subscription
@@ -26,17 +26,15 @@ export class NewsletterSubscriptionService {
     });
 
     if (subscription) {
-      const welcomeEmailOptions: MailOptions = {
+      const welcomeEmailOptions: MailOptions<BaseMailContext> = {
         subject: 'Newsletter subscription confirmed.',
         template: 'welcome',
       };
 
-      this.mailer.send(
+      this.mailer.send<BaseMailContext>(
         [createNewsletterSubscriptionDto.email],
         welcomeEmailOptions,
       );
-    } else {
-      throw new BadRequestException('error');
     }
 
     return subscription;

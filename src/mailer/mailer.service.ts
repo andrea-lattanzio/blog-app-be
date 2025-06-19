@@ -1,24 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { MailOptions } from './mail.utils';
+import { BaseMailContext, MailOptions } from './mail.utils';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailSenderService {
-  private readonly frontendBaseUri: string = this.configSrv.get<string>('frontend.baseUri');
-
   constructor(
     private readonly mailerSrv: MailerService,
     private readonly configSrv: ConfigService,
-  ) {}
+  ) { }
 
-  async send(
+  async send<T>(
     usersToNotify: string[],
-    options: MailOptions,
+    options: MailOptions<T>,
   ): Promise<void> {
-    const context = options.context
-      ? { ...options.context, frontendBaseUri: this.frontendBaseUri }
-      : { frontendBaseUri: this.frontendBaseUri };
+    const baseContext: BaseMailContext = { frontendBaseUri: this.configSrv.get<string>('frontend.baseUri') };
+    const context = { ...baseContext, ...(options.context || {}) };
 
     usersToNotify.forEach((email) => {
       this.mailerSrv.sendMail({
