@@ -3,7 +3,7 @@ import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscri
 import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
 import { DatabaseService } from 'src/config/database/database.service';
 import { NewsletterSubscription } from '@prisma/client';
-import { baseEmailContext, MailSenderService } from 'src/mailer/mailer.service';
+import { MailSenderService } from 'src/mailer/mailer.service';
 import { MailOptions } from 'src/mailer/mail.utils';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class NewsletterSubscriptionService {
     });
 
     if (subscription) {
-      const welcomeEmailOptions: MailOptions<baseEmailContext> = {
+      const welcomeEmailOptions: MailOptions = {
         subject: 'Newsletter subscription confirmed.',
         template: 'welcome',
       };

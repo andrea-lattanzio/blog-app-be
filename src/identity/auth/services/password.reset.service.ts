@@ -36,7 +36,7 @@ export class PasswordResetService {
     return token;
   }
 
-  async validateAndConsume(email: string, token: string): Promise<void> {
+  async validateAndConsumeToken(email: string, token: string): Promise<void> {
   }
 
   /**
@@ -44,7 +44,7 @@ export class PasswordResetService {
    * @param token
    * @returns
    */
-  private generateResetPasswordLink(token: string): string {
+  public generateResetPasswordLink(token: string): string {
     return generateFullWebLink(this.configSrv.get<string>('frontend.baseUri'), [
       'auth',
       'reset-password',

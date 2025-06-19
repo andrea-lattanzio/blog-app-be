@@ -9,9 +9,10 @@ import JwtModuleConfig from 'src/config/modules-imports-config/jwt.config';
 import { DatabaseModule } from 'src/config/database/database.module';
 import { AuthService } from './services/auth.service';
 import { PasswordResetService } from './services/password.reset.service';
+import { MailSenderModule } from 'src/mailer/mailer.module';
 
 @Module({
-  imports: [JwtModule.registerAsync(JwtModuleConfig), DatabaseModule],
+  imports: [JwtModule.registerAsync(JwtModuleConfig), DatabaseModule, MailSenderModule],
   controllers: [AuthController, PasswordResetController],
   providers: [
     AuthService,

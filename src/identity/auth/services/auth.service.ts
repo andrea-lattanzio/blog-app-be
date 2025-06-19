@@ -21,7 +21,7 @@ export class AuthService {
   constructor(
     private readonly userSrv: UserService,
     private readonly jwtSrv: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(email: string, password: string) {
     const user = await this.userSrv.findOneByEmail(email);
@@ -64,5 +64,10 @@ export class AuthService {
   async profile(user: IUser): Promise<User> {
     if (!user) return;
     return await this.userSrv.findOneByEmail(user.email);
+  }
+
+  async changePassword(email: string, newPassword: string): Promise<void> {
+    const hashedPassword = await bcrypt.hashSync(newPassword, BCRYPT_HASH_SALT);
+    await this.userSrv.updatePassword(email, hashedPassword);
   }
 }

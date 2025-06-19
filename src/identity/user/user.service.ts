@@ -6,7 +6,7 @@ import { UserInfoDto } from '../auth/dto/auth.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: DatabaseService) {}
+  constructor(private readonly prisma: DatabaseService) { }
 
   async create(user: User) {
     return await this.prisma.user.create({ data: user });
@@ -22,6 +22,15 @@ export class UserService {
       where: { id },
     });
     return new UserInfoDto(deletedUser);
+  }
+
+  async updatePassword(email: string, hashedPassword: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { email },
+      data: {
+        password: hashedPassword
+      }
+    })
   }
 
   async findOneByEmail(email: string) {

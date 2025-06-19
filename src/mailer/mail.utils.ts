@@ -1,8 +1,8 @@
 import { join } from 'path';
 
-export class MailOptions<TContext> {
+export class MailOptions {
   subject: string;
-  context?: TContext;
+  context?: any;
   template: string;
   attachments?: any[];
 }

@@ -8,7 +8,6 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import {
   LoginRequestDTO,
   LoginResponseDto,
@@ -21,6 +20,7 @@ import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { LocalAuthGuard } from 'src/shared/guards/local.guard';
 import { ApiBody, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { UserService } from '../../user/user.service';
+import { AuthService } from '../services/auth.service';
 @Controller('auth')
 export class AuthController {
   constructor(
