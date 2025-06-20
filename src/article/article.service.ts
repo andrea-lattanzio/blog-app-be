@@ -7,7 +7,7 @@ import { fullArticle } from './utils/article.query';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { updateChapters } from './utils/article.update.helpers';
 import { ArticleQueryDto } from './dto/article.query.dto';
-import { Article, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ArticleService {
@@ -58,16 +58,16 @@ export class ArticleService {
     }
 
     if (sortBy) {
-      if (sortBy === 'views') {
+      if (sortBy === 'mostSeen') {
         query.orderBy = {
           views: 'desc',
         };
       }
-    } else {
+    } else if (sortBy === 'mostRecent') {
       query.orderBy = {
-        createdAt: 'asc',
-      };
-    }
+        createdAt: 'desc',
+      }
+    } else if ((sortBy === 'best')) {}
 
     const articles = await this.prisma.article.findMany(query);
     return ArticleDto.fromEntities(articles);

@@ -9,8 +9,8 @@ export class ArticleQueryDto extends PaginationQueryDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['views', 'createdAt'])
-  sortBy?: 'views' | 'createdAt';
+  @IsIn(['best', 'mostRecent', 'mostSeen'])
+  sortBy?: 'best' | 'mostRecent' | 'mostSeen';
 
   @IsOptional()
   @IsString()
