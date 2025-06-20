@@ -58,16 +58,17 @@ export class ArticleService {
     }
 
     if (sortBy) {
+      if (sortBy === 'mostRecent') {
+        query.orderBy = {
+          createdAt: 'desc'
+        };
+      }
       if (sortBy === 'mostSeen') {
         query.orderBy = {
           views: 'desc',
         };
       }
-    } else if (sortBy === 'mostRecent') {
-      query.orderBy = {
-        createdAt: 'desc',
-      }
-    } else if ((sortBy === 'best')) {}
+    } else if (sortBy === 'best') { }
 
     const articles = await this.prisma.article.findMany(query);
     return ArticleDto.fromEntities(articles);

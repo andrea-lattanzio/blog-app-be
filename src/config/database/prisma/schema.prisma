@@ -44,6 +44,7 @@ model Article {
   author      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   comments    Comment[]
+  likes       Int       @default(0)
 }
 
 /**
@@ -114,10 +115,9 @@ model NewsletterSubscription {
   is_active Boolean  @default(true)
 }
 
-
 /**
  * Password reset table to keep track of password changes
-*/
+ */
 model PasswordResetLog {
   id        String   @id @default(uuid())
   email     String
