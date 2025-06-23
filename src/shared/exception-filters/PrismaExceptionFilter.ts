@@ -256,7 +256,7 @@ export class PrismaExceptionsFilter implements ExceptionFilter {
       case 'P2022':
         return 'Column not found';
       case 'P2025':
-        return 'Required record not found';
+        return 'Required resource not found';
       default:
         return 'Resource not found';
     }

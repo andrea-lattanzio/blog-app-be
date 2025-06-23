@@ -11,7 +11,6 @@ import {
  */
 
 export const updateChapters = (chapters: UpdateChapterDto[]): Prisma.ChapterUpdateWithWhereUniqueWithoutArticleInput[] => {
-  console.log('updating chapters');
   return chapters?.map((chapter) => ({
     where: { id: chapter.id },
     data: {
@@ -24,7 +23,6 @@ export const updateChapters = (chapters: UpdateChapterDto[]): Prisma.ChapterUpda
 };
 
 export const updateParagraphs = (paragraphs: UpdateParagraphDto[]): Prisma.ParagraphUpdateWithWhereUniqueWithoutChapterInput[] => {
-  console.log('updating paragraphs');
   return paragraphs.map((paragraph) => ({
     where: { id: paragraph.id },
     data: {
@@ -41,7 +39,6 @@ export const updateParagraphs = (paragraphs: UpdateParagraphDto[]): Prisma.Parag
 };
 
 export const updateCodeSections = (codeSections: UpdateCodeSectionDto[]): Prisma.CodeSectionUpdateWithWhereUniqueWithoutParagraphInput[] => {
-  console.log('updating code sections');
   return codeSections.map((section) => ({
     where: { id: section.id },
     data: {
