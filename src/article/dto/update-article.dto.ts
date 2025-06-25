@@ -59,9 +59,6 @@ export class UpdateArticleDto {
   @IsString()
   @Length(10, 200)
   description?: string;
-  @IsOptional()
-  @IsNumber()
-  likes?: number;
   @ValidateNested({ each: true })
   @Type(() => UpdateChapterDto)
   chapters?: UpdateChapterDto[];
