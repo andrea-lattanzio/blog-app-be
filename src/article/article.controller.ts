@@ -132,6 +132,40 @@ export class ArticleController {
   /**
    *
    * @param id The article id.
+   * @returns.
+   */
+  @Post('/like/:id')
+  @ApiOperation({
+    summary: 'Like Article',
+    description: 'This endpoint adds a like to an article',
+  })
+  addLike(
+    @GetUser('id') userId: string,
+    @Param('id') articleId: string
+  ) {
+    return this.articleService.addLike(userId, articleId);
+  }
+
+  /**
+   *
+   * @param id The article id.
+   * @returns.
+   */
+  @Delete('/like/:id')
+  @ApiOperation({
+    summary: 'Remove Article Like',
+    description: 'This endpoint removes a like to an article',
+  })
+  removeLike(
+    @GetUser('id') userId: string,
+    @Param('id') articleId: string
+  ) {
+    return this.articleService.removeLike(userId, articleId);
+  }
+
+  /**
+   *
+   * @param id The article id.
    * @returns The deleted article along with all the related entities.
    */
   @Delete(':id')

@@ -11,7 +11,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ArticleService {
-  constructor(private readonly prisma: DatabaseService) {}
+  constructor(private readonly prisma: DatabaseService) { }
 
   /**
    *
@@ -138,6 +138,46 @@ export class ArticleService {
       },
     });
     return new ArticleDto(updatedArticle);
+  }
+
+  /**
+   * This method adds a like to an article by 
+   * adding a record to the likes join table
+   * 
+   * @param userId the loggedUser id
+   * @param articleId the article id to remove like from
+   */
+  async addLike(userId: string, articleId: string): Promise<void> {
+    await this.prisma.like.create({
+      data: {
+        userId,
+        articleId
+      }
+    });
+  }
+
+  /**
+   * This method removes a like from an article
+   * by deleting the record to the likes join table
+   * where both the user and the article id match
+   * 
+   * @param userId the loggedUser id
+   * @param articleId the article id to remove like from
+   */
+  async removeLike(userId: string, articleId: string): Promise<void> {
+    await this.prisma.like.delete({
+      where: {
+        /**
+         * userId_articleId is an object created by prisma for 
+         * queries that need to uniquely identify a record by two fields like in this case.
+         * This is made possible by having defind the @@unique([userId, articleId]) constraint in the schema.
+         */
+        userId_articleId: {
+          userId,
+          articleId
+        }
+      }
+    });
   }
 
   /**
