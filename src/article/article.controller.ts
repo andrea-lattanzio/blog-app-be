@@ -110,8 +110,8 @@ export class ArticleController {
     description:
       'This endpoint returns a single article along with all the related entities',
   })
-  findOne(@Param('id') id: string) {
-    return this.articleService.findOne(id);
+  findOne(@Param('id') id: string, @GetUser('id') userId: string) {
+    return this.articleService.findOne(id, userId);
   }
 
   /**

@@ -45,7 +45,8 @@ export class ArticleDto {
   author: string;
   tag: string;
   updatedAt: string;
-  _count: { likes: number }
+  _count: { likes: number };
+  liked: boolean = false;
 
   @Exclude()
   createdAt: string;

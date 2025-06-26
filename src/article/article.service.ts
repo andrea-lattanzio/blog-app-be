@@ -100,15 +100,21 @@ export class ArticleService {
   /**
    *
    * @param articleId The article id.
+   * @param userId The optional authenticated user id.
    * @returns A single article along with all the related entities.
    */
-  async findOne(articleId: string): Promise<ArticleDto> {
+  async findOne(articleId: string, userId?: string): Promise<ArticleDto> {
     const article = await this.prisma.article.findUniqueOrThrow({
       where: { id: articleId },
       include: fullArticle.include,
     });
+
     this.updateViews(articleId);
-    return new ArticleDto(article);
+
+    const result = new ArticleDto(article);
+    console.log(userId);
+    userId ? result.liked = await this.isLiked(articleId, userId) : null;
+    return result;
   }
 
   private async updateViews(articleId: string) {
@@ -120,6 +126,18 @@ export class ArticleService {
         },
       },
     });
+  }
+
+  private async isLiked(articleId: string, userId: string): Promise<boolean> {
+    const like = await this.prisma.like.findUnique({
+      where: {
+        userId_articleId: {
+          userId,
+          articleId
+        }
+      }
+    });
+    return false;
   }
 
   /**
