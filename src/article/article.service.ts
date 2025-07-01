@@ -112,7 +112,6 @@ export class ArticleService {
     this.updateViews(articleId);
 
     const result = new ArticleDto(article);
-    console.log(userId);
     userId ? result.liked = await this.isLiked(articleId, userId) : null;
     return result;
   }
@@ -137,7 +136,7 @@ export class ArticleService {
         }
       }
     });
-    return false;
+    return !!like;
   }
 
   /**

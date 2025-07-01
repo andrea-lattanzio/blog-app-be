@@ -22,6 +22,7 @@ import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { Public } from 'src/shared/decorators/public.decorator';
 import { ArticleQueryDto } from './dto/article.query.dto';
 import { paginateResponse } from 'src/shared/presenter/paginateResponse';
+import { OptionalAuth } from 'src/shared/decorators/optionalAuth.decorator';
 
 @ApiTags('article')
 @Controller('article')
@@ -103,7 +104,7 @@ export class ArticleController {
    * @param id The article id.
    * @returns A single article along with all the related entities.
    */
-  @Public()
+  @OptionalAuth()
   @Get(':id')
   @ApiOperation({
     summary: 'Get Article',
