@@ -52,7 +52,6 @@ export class AuthService {
     );
     const newUser: IUser = {
       ...user,
-      username: await this.userSrv.getUsername(user.name, user.lastname),
       authProvider: 'Local',
       password: hashedPassword,
     };

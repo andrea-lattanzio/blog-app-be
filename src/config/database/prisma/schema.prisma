@@ -19,7 +19,6 @@ model User {
   id            String       @id @default(uuid())
   name          String
   lastname      String
-  username      String       @unique
   email         String       @unique
   password      String?
   authProvider  AuthProvider

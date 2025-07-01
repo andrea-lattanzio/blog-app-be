@@ -48,7 +48,6 @@ export class UserInfoDto {
   createdAt: string;
   name: string;
   lastname: string;
-  username: string;
   fullname: string;
 
   @Exclude()
