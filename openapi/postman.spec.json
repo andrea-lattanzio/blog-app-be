@@ -9,7 +9,7 @@
                     "description": "",
                     "item": [
                         {
-                            "id": "a5b1db79-5c4d-4275-841f-de0031763fe2",
+                            "id": "0b945c5c-11fd-46f1-b8d0-cb0062053945",
                             "name": "Create Article",
                             "request": {
                                 "name": "Create Article",
@@ -41,7 +41,7 @@
                                 "method": "POST",
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{}",
+                                    "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"chapters\": [\n    {\n      \"title\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        },\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"title\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        },\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
                                     "options": {
                                         "raw": {
                                             "headerFamily": "json",
@@ -53,7 +53,7 @@
                             },
                             "response": [
                                 {
-                                    "id": "7ed7597d-992f-41d9-a94d-bd1805e875cf",
+                                    "id": "26109e27-48a1-4f20-8796-1e3631256f43",
                                     "name": "The article was succesfully created",
                                     "originalRequest": {
                                         "url": {
@@ -80,7 +80,7 @@
                                         "method": "POST",
                                         "body": {
                                             "mode": "raw",
-                                            "raw": "{}",
+                                            "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"chapters\": [\n    {\n      \"title\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        },\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"title\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        },\n        {\n          \"text\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
                                             "options": {
                                                 "raw": {
                                                     "headerFamily": "json",
@@ -108,7 +108,7 @@
                             }
                         },
                         {
-                            "id": "299af9a5-52aa-4f81-9960-3a6c65456152",
+                            "id": "c5b0ac01-1a53-4d66-bb51-2bb6b61ebe31",
                             "name": "Get Articles",
                             "request": {
                                 "name": "Get Articles",
@@ -124,7 +124,44 @@
                                     "host": [
                                         "{{baseUrl}}"
                                     ],
-                                    "query": [],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "tag",
+                                            "value": "<string>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "titleContains",
+                                            "value": "<string>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "page",
+                                            "value": "<number>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "size",
+                                            "value": "<number>"
+                                        }
+                                    ],
                                     "variable": []
                                 },
                                 "method": "GET",
@@ -133,7 +170,7 @@
                             },
                             "response": [
                                 {
-                                    "id": "52bb2a4a-05ee-4774-af15-b86041acfe5a",
+                                    "id": "81422659-2822-46fe-82c8-530d15ef86b8",
                                     "originalRequest": {
                                         "url": {
                                             "path": [
@@ -143,7 +180,44 @@
                                             "host": [
                                                 "{{baseUrl}}"
                                             ],
-                                            "query": [],
+                                            "query": [
+                                                {
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "(Required) ",
+                                                        "type": "text/plain"
+                                                    },
+                                                    "key": "tag",
+                                                    "value": "<string>"
+                                                },
+                                                {
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "",
+                                                        "type": "text/plain"
+                                                    },
+                                                    "key": "titleContains",
+                                                    "value": "<string>"
+                                                },
+                                                {
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "(Required) ",
+                                                        "type": "text/plain"
+                                                    },
+                                                    "key": "page",
+                                                    "value": "<number>"
+                                                },
+                                                {
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "(Required) ",
+                                                        "type": "text/plain"
+                                                    },
+                                                    "key": "size",
+                                                    "value": "<number>"
+                                                }
+                                            ],
                                             "variable": []
                                         },
                                         "method": "GET",
@@ -162,11 +236,91 @@
                             }
                         },
                         {
+                            "name": "latest-three",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "c24a9930-bf79-4bd7-8782-833386fbbaf7",
+                                    "name": "Get Article",
+                                    "request": {
+                                        "name": "Get Article",
+                                        "description": {
+                                            "content": "This endpoint returns a single article along with all the related entities",
+                                            "type": "text/plain"
+                                        },
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "article",
+                                                "latest-three"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {},
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "1500497c-b6b1-4ec2-8de3-29e75573d43a",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "article",
+                                                        "latest-three"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "GET",
+                                                "body": {}
+                                            },
+                                            "status": "OK",
+                                            "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "[]",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "name": "{id}",
                             "description": "",
                             "item": [
                                 {
-                                    "id": "b1929835-2629-471c-a2a2-fd69ee427dc5",
+                                    "id": "8a2e50d5-bea1-44dd-ba18-625932ace7e6",
                                     "name": "Get Article",
                                     "request": {
                                         "name": "Get Article",
@@ -197,13 +351,19 @@
                                                 }
                                             ]
                                         },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
                                         "method": "GET",
                                         "body": {},
                                         "auth": null
                                     },
                                     "response": [
                                         {
-                                            "id": "930c38b6-3170-421d-8407-f5ca8f565137",
+                                            "id": "f9dad0b3-7342-44cc-90bd-4b92df84d68d",
                                             "originalRequest": {
                                                 "url": {
                                                     "path": [
@@ -217,14 +377,26 @@
                                                     "query": [],
                                                     "variable": []
                                                 },
+                                                "header": [
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
                                                 "method": "GET",
                                                 "body": {}
                                             },
                                             "status": "OK",
                                             "code": 200,
-                                            "header": [],
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{}",
                                             "cookie": [],
-                                            "_postman_previewlanguage": "text"
+                                            "_postman_previewlanguage": "json"
                                         }
                                     ],
                                     "event": [],
@@ -233,7 +405,118 @@
                                     }
                                 },
                                 {
-                                    "id": "e720bb4e-8ddd-4dac-b283-9aeca44f7e26",
+                                    "id": "0cd4c9b4-bea8-45ad-a81e-b962e79e6dc3",
+                                    "name": "Update Article",
+                                    "request": {
+                                        "name": "Update Article",
+                                        "description": {
+                                            "content": "This endpoint updates an article",
+                                            "type": "text/plain"
+                                        },
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "article",
+                                                ":id"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "type": "any",
+                                                    "value": "<string>",
+                                                    "key": "id",
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "(Required) ",
+                                                        "type": "text/plain"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"chapters\": [\n    {\n      \"id\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        }\n      ],\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        }\n      ],\n      \"title\": \"<string>\"\n    }\n  ]\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "c1447ad0-6ae4-4225-ae8e-13e0a181624d",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "article",
+                                                        ":id"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    },
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "PATCH",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"chapters\": [\n    {\n      \"id\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        }\n      ],\n      \"title\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"paragraphs\": [\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"codeSections\": [\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"language\": \"<string>\",\n              \"code\": \"<string>\",\n              \"caption\": \"<string>\"\n            }\n          ],\n          \"text\": \"<string>\"\n        }\n      ],\n      \"title\": \"<string>\"\n    }\n  ]\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "OK",
+                                            "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                },
+                                {
+                                    "id": "39d4bd19-f123-4b48-b881-49a24db9280a",
                                     "name": "Delete Article",
                                     "request": {
                                         "name": "Delete Article",
@@ -264,13 +547,19 @@
                                                 }
                                             ]
                                         },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
                                         "method": "DELETE",
                                         "body": {},
                                         "auth": null
                                     },
                                     "response": [
                                         {
-                                            "id": "2cf5e859-60b9-412f-b7f5-c78fd6148709",
+                                            "id": "85328005-3862-44f8-957c-7ff4a398f507",
                                             "originalRequest": {
                                                 "url": {
                                                     "path": [
@@ -284,11 +573,838 @@
                                                     "query": [],
                                                     "variable": []
                                                 },
+                                                "header": [
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
                                                 "method": "DELETE",
                                                 "body": {}
                                             },
                                             "status": "OK",
                                             "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "like",
+                            "description": "",
+                            "item": [
+                                {
+                                    "name": "{id}",
+                                    "description": "",
+                                    "item": [
+                                        {
+                                            "id": "5dee34f9-ff83-47c5-82f6-8506624eeb0a",
+                                            "name": "Like Article",
+                                            "request": {
+                                                "name": "Like Article",
+                                                "description": {
+                                                    "content": "This endpoint adds a like to an article",
+                                                    "type": "text/plain"
+                                                },
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "article",
+                                                        "like",
+                                                        ":id"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": [
+                                                        {
+                                                            "type": "any",
+                                                            "value": "<string>",
+                                                            "key": "id",
+                                                            "disabled": false,
+                                                            "description": {
+                                                                "content": "(Required) ",
+                                                                "type": "text/plain"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "method": "POST",
+                                                "body": {},
+                                                "auth": null
+                                            },
+                                            "response": [
+                                                {
+                                                    "id": "bb5eb643-32d1-448a-8f10-3fa8406410f0",
+                                                    "originalRequest": {
+                                                        "url": {
+                                                            "path": [
+                                                                "api",
+                                                                "article",
+                                                                "like",
+                                                                ":id"
+                                                            ],
+                                                            "host": [
+                                                                "{{baseUrl}}"
+                                                            ],
+                                                            "query": [],
+                                                            "variable": []
+                                                        },
+                                                        "method": "POST",
+                                                        "body": {}
+                                                    },
+                                                    "status": "Created",
+                                                    "code": 201,
+                                                    "header": [],
+                                                    "cookie": [],
+                                                    "_postman_previewlanguage": "text"
+                                                }
+                                            ],
+                                            "event": [],
+                                            "protocolProfileBehavior": {
+                                                "disableBodyPruning": true
+                                            }
+                                        },
+                                        {
+                                            "id": "426e47a3-c019-4a9b-8f68-f01b3195789a",
+                                            "name": "Remove Article Like",
+                                            "request": {
+                                                "name": "Remove Article Like",
+                                                "description": {
+                                                    "content": "This endpoint removes a like to an article",
+                                                    "type": "text/plain"
+                                                },
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "article",
+                                                        "like",
+                                                        ":id"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": [
+                                                        {
+                                                            "type": "any",
+                                                            "value": "<string>",
+                                                            "key": "id",
+                                                            "disabled": false,
+                                                            "description": {
+                                                                "content": "(Required) ",
+                                                                "type": "text/plain"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "method": "DELETE",
+                                                "body": {},
+                                                "auth": null
+                                            },
+                                            "response": [
+                                                {
+                                                    "id": "c95dcd2b-653c-4679-91e6-1184d6426dd6",
+                                                    "originalRequest": {
+                                                        "url": {
+                                                            "path": [
+                                                                "api",
+                                                                "article",
+                                                                "like",
+                                                                ":id"
+                                                            ],
+                                                            "host": [
+                                                                "{{baseUrl}}"
+                                                            ],
+                                                            "query": [],
+                                                            "variable": []
+                                                        },
+                                                        "method": "DELETE",
+                                                        "body": {}
+                                                    },
+                                                    "status": "OK",
+                                                    "code": 200,
+                                                    "header": [],
+                                                    "cookie": [],
+                                                    "_postman_previewlanguage": "text"
+                                                }
+                                            ],
+                                            "event": [],
+                                            "protocolProfileBehavior": {
+                                                "disableBodyPruning": true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "auth",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "login",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "9e89e2c2-0257-405e-ba1a-2b1b53c07aba",
+                                    "name": "Login",
+                                    "request": {
+                                        "name": "Login",
+                                        "description": {
+                                            "content": "This endpoint receives an email and a password and after validating them, returns a jwt token with the encrypted user infos",
+                                            "type": "text/plain"
+                                        },
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "auth",
+                                                "login"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "b75df74b-cf41-4c17-888f-f557a99b669f",
+                                            "name": "User succesfully logged in",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "auth",
+                                                        "login"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    },
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "POST",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "OK",
+                                            "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n  \"token\": \"<string>\",\n  \"user\": {\n    \"email\": \"<string>\",\n    \"createdAt\": \"<string>\",\n    \"name\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"fullname\": \"<string>\",\n    \"id\": \"<string>\",\n    \"password\": \"<string>\",\n    \"authProvider\": \"<string>\",\n    \"updatedAt\": \"<string>\"\n  }\n}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        },
+                                        {
+                                            "id": "19942b6c-a850-401a-a456-e644d4ac7b4b",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "auth",
+                                                        "login"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    },
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "POST",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "Created",
+                                            "code": 201,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n  \"token\": \"<string>\",\n  \"user\": {\n    \"email\": \"<string>\",\n    \"createdAt\": \"<string>\",\n    \"name\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"fullname\": \"<string>\",\n    \"id\": \"<string>\",\n    \"password\": \"<string>\",\n    \"authProvider\": \"<string>\",\n    \"updatedAt\": \"<string>\"\n  }\n}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "register",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "954860d7-ae00-4a0a-87df-8e60f5d2f0e4",
+                                    "name": "Register",
+                                    "request": {
+                                        "name": "Register",
+                                        "description": {
+                                            "content": "This endpoint receives an email and a password and creates a new user if email is not already present",
+                                            "type": "text/plain"
+                                        },
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "auth",
+                                                "register"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"name\": \"<string>\",\n  \"lastname\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "ad3bd3b5-6471-4d1e-8285-41654bac2495",
+                                            "name": "User succesfully created and logged in",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "auth",
+                                                        "register"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    },
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "POST",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"name\": \"<string>\",\n  \"lastname\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "OK",
+                                            "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n  \"token\": \"<string>\",\n  \"user\": {\n    \"email\": \"<string>\",\n    \"createdAt\": \"<string>\",\n    \"name\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"fullname\": \"<string>\",\n    \"id\": \"<string>\",\n    \"password\": \"<string>\",\n    \"authProvider\": \"<string>\",\n    \"updatedAt\": \"<string>\"\n  }\n}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        },
+                                        {
+                                            "id": "c2205cb2-5a0d-4e9c-9dfa-6d39dcc4f0a0",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "auth",
+                                                        "register"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    },
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "POST",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"name\": \"<string>\",\n  \"lastname\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "Created",
+                                            "code": 201,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n  \"token\": \"<string>\",\n  \"user\": {\n    \"email\": \"<string>\",\n    \"createdAt\": \"<string>\",\n    \"name\": \"<string>\",\n    \"lastname\": \"<string>\",\n    \"fullname\": \"<string>\",\n    \"id\": \"<string>\",\n    \"password\": \"<string>\",\n    \"authProvider\": \"<string>\",\n    \"updatedAt\": \"<string>\"\n  }\n}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "726f89cf-e86b-4308-9fbc-11552e6585ca",
+                            "name": "profile",
+                            "request": {
+                                "name": "profile",
+                                "description": {
+                                    "content": "This endpoint returns the currently logged in user info",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "api",
+                                        "auth"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {},
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "07c8ee50-288c-49f8-8031-2db4a62d0bf7",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "auth"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"email\": \"<string>\",\n  \"createdAt\": \"<string>\",\n  \"name\": \"<string>\",\n  \"lastname\": \"<string>\",\n  \"fullname\": \"<string>\",\n  \"id\": \"<string>\",\n  \"password\": \"<string>\",\n  \"authProvider\": \"<string>\",\n  \"updatedAt\": \"<string>\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "name": "{id}",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "d54a065b-bd4b-476b-a6f7-e8750fee4bb8",
+                                    "name": "Delete",
+                                    "request": {
+                                        "name": "Delete",
+                                        "description": {
+                                            "content": "This endpoint deletes a user",
+                                            "type": "text/plain"
+                                        },
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "auth",
+                                                ":id"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "type": "any",
+                                                    "value": "<string>",
+                                                    "key": "id",
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "(Required) ",
+                                                        "type": "text/plain"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {},
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "f5ba6a8c-df3e-4fdc-ac40-1b0c1f45fe64",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "auth",
+                                                        ":id"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "DELETE",
+                                                "body": {}
+                                            },
+                                            "status": "OK",
+                                            "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{\n  \"email\": \"<string>\",\n  \"createdAt\": \"<string>\",\n  \"name\": \"<string>\",\n  \"lastname\": \"<string>\",\n  \"fullname\": \"<string>\",\n  \"id\": \"<string>\",\n  \"password\": \"<string>\",\n  \"authProvider\": \"<string>\",\n  \"updatedAt\": \"<string>\"\n}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "reset-password",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "request",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "1f485b0a-b054-4557-aa0f-daba4641fea6",
+                                    "name": "Password Reset Controller request Reset",
+                                    "request": {
+                                        "name": "Password Reset Controller request Reset",
+                                        "description": {},
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "reset-password",
+                                                "request"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "f46189fd-20a7-4107-a7a1-501d5436ccfd",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "reset-password",
+                                                        "request"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "POST",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"email\": \"<string>\"\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "Created",
+                                            "code": 201,
+                                            "header": [],
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "text"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "reset",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "094d25af-9bc0-43b5-aa9a-8086afa5efc8",
+                                    "name": "Password Reset Controller reset Password",
+                                    "request": {
+                                        "name": "Password Reset Controller reset Password",
+                                        "description": {},
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "reset-password",
+                                                "reset"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\",\n  \"token\": \"<string>\",\n  \"newPassword\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        },
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "85cbd2bb-78da-449a-8b27-aaecad860d5f",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "reset-password",
+                                                        "reset"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "POST",
+                                                "body": {
+                                                    "mode": "raw",
+                                                    "raw": "{\n  \"email\": \"<string>\",\n  \"token\": \"<string>\",\n  \"newPassword\": \"<string>\"\n}",
+                                                    "options": {
+                                                        "raw": {
+                                                            "headerFamily": "json",
+                                                            "language": "json"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "status": "Created",
+                                            "code": 201,
                                             "header": [],
                                             "cookie": [],
                                             "_postman_previewlanguage": "text"
@@ -304,7 +1420,470 @@
                     ]
                 },
                 {
-                    "id": "eb56fd97-9be4-4070-b932-5daebb369bf2",
+                    "name": "comment",
+                    "description": "",
+                    "item": [
+                        {
+                            "id": "69b8aa93-5ddb-4c4c-9b67-aba64cded11b",
+                            "name": "Create Comment",
+                            "request": {
+                                "name": "Create Comment",
+                                "description": {
+                                    "content": "This endpoint creates a new comment entity",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "api",
+                                        "comment"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"text\": \"<string>\",\n  \"articleId\": \"<string>\",\n  \"parentId\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "cfbc6f5b-a703-4e65-8ba9-c271f209ca13",
+                                    "name": "The comment was succesfully created",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "comment"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"text\": \"<string>\",\n  \"articleId\": \"<string>\",\n  \"parentId\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Created",
+                                    "code": 201,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "name": "article",
+                            "description": "",
+                            "item": [
+                                {
+                                    "name": "{id}",
+                                    "description": "",
+                                    "item": [
+                                        {
+                                            "id": "1a9ba109-e157-4840-9efe-561546d0ec87",
+                                            "name": "Get Comments",
+                                            "request": {
+                                                "name": "Get Comments",
+                                                "description": {
+                                                    "content": "This endpoint returns a list of all comments without their replies",
+                                                    "type": "text/plain"
+                                                },
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "comment",
+                                                        "article",
+                                                        ":id"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": [
+                                                        {
+                                                            "type": "any",
+                                                            "value": "<string>",
+                                                            "key": "id",
+                                                            "disabled": false,
+                                                            "description": {
+                                                                "content": "(Required) ",
+                                                                "type": "text/plain"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "GET",
+                                                "body": {},
+                                                "auth": null
+                                            },
+                                            "response": [
+                                                {
+                                                    "id": "68662959-e7b0-4690-b54e-785db98026f2",
+                                                    "originalRequest": {
+                                                        "url": {
+                                                            "path": [
+                                                                "api",
+                                                                "comment",
+                                                                "article",
+                                                                ":id"
+                                                            ],
+                                                            "host": [
+                                                                "{{baseUrl}}"
+                                                            ],
+                                                            "query": [],
+                                                            "variable": []
+                                                        },
+                                                        "header": [
+                                                            {
+                                                                "key": "Accept",
+                                                                "value": "application/json"
+                                                            }
+                                                        ],
+                                                        "method": "GET",
+                                                        "body": {}
+                                                    },
+                                                    "status": "OK",
+                                                    "code": 200,
+                                                    "header": [
+                                                        {
+                                                            "key": "Content-Type",
+                                                            "value": "application/json"
+                                                        }
+                                                    ],
+                                                    "body": "[]",
+                                                    "cookie": [],
+                                                    "_postman_previewlanguage": "json"
+                                                }
+                                            ],
+                                            "event": [],
+                                            "protocolProfileBehavior": {
+                                                "disableBodyPruning": true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "{id}",
+                            "description": "",
+                            "item": [
+                                {
+                                    "id": "5ec0364f-0c54-442b-8e7a-bacff9dda8a5",
+                                    "name": "Get one comment",
+                                    "request": {
+                                        "name": "Get one comment",
+                                        "description": {
+                                            "content": "This endpoint returns a single comment with its replies",
+                                            "type": "text/plain"
+                                        },
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "comment",
+                                                ":id"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "type": "any",
+                                                    "value": "<string>",
+                                                    "key": "id",
+                                                    "disabled": false,
+                                                    "description": {
+                                                        "content": "(Required) ",
+                                                        "type": "text/plain"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {},
+                                        "auth": null
+                                    },
+                                    "response": [
+                                        {
+                                            "id": "40fed059-6586-4c4a-b167-0d2a8f28040c",
+                                            "originalRequest": {
+                                                "url": {
+                                                    "path": [
+                                                        "api",
+                                                        "comment",
+                                                        ":id"
+                                                    ],
+                                                    "host": [
+                                                        "{{baseUrl}}"
+                                                    ],
+                                                    "query": [],
+                                                    "variable": []
+                                                },
+                                                "header": [
+                                                    {
+                                                        "key": "Accept",
+                                                        "value": "application/json"
+                                                    }
+                                                ],
+                                                "method": "GET",
+                                                "body": {}
+                                            },
+                                            "status": "OK",
+                                            "code": 200,
+                                            "header": [
+                                                {
+                                                    "key": "Content-Type",
+                                                    "value": "application/json"
+                                                }
+                                            ],
+                                            "body": "{}",
+                                            "cookie": [],
+                                            "_postman_previewlanguage": "json"
+                                        }
+                                    ],
+                                    "event": [],
+                                    "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "newsletter-subscription",
+                    "description": "",
+                    "item": [
+                        {
+                            "id": "b0137b2e-1f7b-4005-82eb-9fbc02f83e4d",
+                            "name": "Newsletter Subscription Controller create",
+                            "request": {
+                                "name": "Newsletter Subscription Controller create",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "api",
+                                        "newsletter-subscription"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"email\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "cef89ee6-ddba-4aab-8e3d-f0297553b07f",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "newsletter-subscription"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Created",
+                                    "code": 201,
+                                    "header": [],
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "text"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "4347d4b6-8467-4406-b903-149778bceb7c",
+                            "name": "Newsletter Subscription Controller disable",
+                            "request": {
+                                "name": "Newsletter Subscription Controller disable",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "api",
+                                        "newsletter-subscription"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "PATCH",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"email\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "5120d0d6-27cb-4d74-a83f-26fda2a68d74",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "api",
+                                                "newsletter-subscription"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"email\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [],
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "text"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "e311401b-e914-47c1-92da-898bff2c078b",
                     "name": "App Controller get Hello",
                     "request": {
                         "name": "App Controller get Hello",
@@ -319,13 +1898,19 @@
                             "query": [],
                             "variable": []
                         },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
                         "method": "GET",
                         "body": {},
                         "auth": null
                     },
                     "response": [
                         {
-                            "id": "135017bc-2cfd-42cd-a695-6fb3eebcbcb7",
+                            "id": "4fda86e5-e693-4e87-820e-49b6d93fa8fa",
                             "originalRequest": {
                                 "url": {
                                     "path": [
@@ -337,14 +1922,26 @@
                                     "query": [],
                                     "variable": []
                                 },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
                                 "method": "GET",
                                 "body": {}
                             },
                             "status": "OK",
                             "code": 200,
-                            "header": [],
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "<string>",
                             "cookie": [],
-                            "_postman_previewlanguage": "text"
+                            "_postman_previewlanguage": "json"
                         }
                     ],
                     "event": [],
@@ -363,7 +1960,7 @@
         }
     ],
     "info": {
-        "_postman_id": "c2540275-531c-4903-88ac-fb281a91fe70",
+        "_postman_id": "3133f500-2914-4373-b023-16f4af4599bb",
         "name": "Blog-app API",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": {

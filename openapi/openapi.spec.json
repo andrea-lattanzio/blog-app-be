@@ -38,10 +38,69 @@
         "operationId": "ArticleController_findAll",
         "summary": "Get Articles",
         "description": "This endpoint returns a list of all articles without related entities",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "tag",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "titleContains",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": ""
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      }
+    },
+    "/api/article/latest-three": {
+      "get": {
+        "operationId": "ArticleController_getLatestThree",
+        "summary": "Get Article",
+        "description": "This endpoint returns a single article along with all the related entities",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArticleDto"
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -66,7 +125,54 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      },
+      "patch": {
+        "operationId": "ArticleController_update",
+        "summary": "Update Article",
+        "description": "This endpoint updates an article",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -89,6 +195,61 @@
         ],
         "responses": {
           "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      }
+    },
+    "/api/article/like/{id}": {
+      "post": {
+        "operationId": "ArticleController_addLike",
+        "summary": "Like Article",
+        "description": "This endpoint adds a like to an article",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "article"
+        ]
+      },
+      "delete": {
+        "operationId": "ArticleController_removeLike",
+        "summary": "Remove Article Like",
+        "description": "This endpoint removes a like to an article",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": ""
           }
         },
@@ -97,13 +258,340 @@
         ]
       }
     },
+    "/api/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "Login",
+        "description": "This endpoint receives an email and a password and after validating them, returns a jwt token with the encrypted user infos",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "User email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User succesfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "summary": "Register",
+        "description": "This endpoint receives an email and a password and creates a new user if email is not already present",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "User email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User succesfully created and logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth": {
+      "get": {
+        "operationId": "AuthController_profile",
+        "summary": "profile",
+        "description": "This endpoint returns the currently logged in user info",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/{id}": {
+      "delete": {
+        "operationId": "AuthController_deleteUser",
+        "summary": "Delete",
+        "description": "This endpoint deletes a user",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reset-password/request": {
+      "post": {
+        "operationId": "PasswordResetController_requestReset",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestResetPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Password Reset"
+        ]
+      }
+    },
+    "/api/reset-password/reset": {
+      "post": {
+        "operationId": "PasswordResetController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Password Reset"
+        ]
+      }
+    },
+    "/api/comment": {
+      "post": {
+        "operationId": "CommentController_create",
+        "summary": "Create Comment",
+        "description": "This endpoint creates a new comment entity",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Comment information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The comment was succesfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "comment"
+        ]
+      }
+    },
+    "/api/comment/article/{id}": {
+      "get": {
+        "operationId": "CommentController_findAll",
+        "summary": "Get Comments",
+        "description": "This endpoint returns a list of all comments without their replies",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommentDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "comment"
+        ]
+      }
+    },
+    "/api/comment/{id}": {
+      "get": {
+        "operationId": "CommentController_findOne",
+        "summary": "Get one comment",
+        "description": "This endpoint returns a single comment with its replies",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "comment"
+        ]
+      }
+    },
+    "/api/newsletter-subscription": {
+      "post": {
+        "operationId": "NewsletterSubscriptionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewsletterSubscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "NewsletterSubscriptionController_disable",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNewsletterSubscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api": {
       "get": {
         "operationId": "AppController_getHello",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -126,13 +614,337 @@
       }
     },
     "schemas": {
+      "CreateCodeSectionDto": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "language",
+          "code"
+        ]
+      },
+      "CreateParagraphDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "codeSections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateCodeSectionDto"
+            }
+          }
+        },
+        "required": [
+          "text",
+          "codeSections"
+        ]
+      },
+      "CreateChapterDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "paragraphs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateParagraphDto"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "paragraphs"
+        ]
+      },
       "CreateArticleDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "chapters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateChapterDto"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "tag",
+          "chapters"
+        ]
       },
       "ArticleDto": {
         "type": "object",
         "properties": {}
+      },
+      "UpdateCodeSectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "UpdateParagraphDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "codeSections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateCodeSectionDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "codeSections"
+        ]
+      },
+      "UpdateChapterDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "paragraphs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateParagraphDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "paragraphs"
+        ]
+      },
+      "UpdateArticleDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "chapters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateChapterDto"
+            }
+          }
+        }
+      },
+      "LoginRequestDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "UserInfoDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "fullname": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "authProvider": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "createdAt",
+          "name",
+          "lastname",
+          "fullname",
+          "id",
+          "password",
+          "authProvider",
+          "updatedAt"
+        ]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserInfoDto"
+          }
+        },
+        "required": [
+          "token",
+          "user"
+        ]
+      },
+      "RegisterRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "lastname",
+          "email",
+          "password"
+        ]
+      },
+      "RequestResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "token",
+          "newPassword"
+        ]
+      },
+      "CreateCommentDto": {
+        "type": "object",
+        "properties": {
+          "articleId": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "CommentDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateNewsletterSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "UpdateNewsletterSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ]
       }
     }
   }
