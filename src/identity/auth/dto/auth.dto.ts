@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { Exclude, plainToInstance } from 'class-transformer';
+import { Exclude, plainToInstance, Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -45,7 +45,6 @@ export class RegisterRequestDto {
 
 export class UserInfoDto {
   email: string;
-  createdAt: string;
   name: string;
   lastname: string;
   fullname: string;
@@ -58,6 +57,9 @@ export class UserInfoDto {
   authProvider: string;
   @Exclude()
   updatedAt: string;
+  @Exclude()
+  role: string;
+
 
   constructor(user: Partial<User>) {
     Object.assign(this, plainToInstance(UserInfoDto, user));
