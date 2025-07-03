@@ -2,7 +2,7 @@ import { AuthProvider, UserRole } from "@prisma/client";
 
 export interface User {
   name: string;
-  lastname: string;
+  lastName: string;
   id?: string;
   email: string;
   authProvider: AuthProvider;

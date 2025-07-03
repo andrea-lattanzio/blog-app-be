@@ -29,7 +29,7 @@ export class RegisterRequestDto {
   name: string;
   @IsString()
   @IsNotEmpty()
-  lastname: string;
+  lastName: string;
   @IsString()
   @IsEmail()
   @IsNotEmpty()

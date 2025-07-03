@@ -187,7 +187,7 @@ export class ArticleService {
         /**
          * userId_articleId is an object created by prisma for 
          * queries that need to uniquely identify a record by two fields like in this case.
-         * This is made possible by having defind the @@unique([userId, articleId]) constraint in the schema.
+         * This is made possible by having defined the @@unique([userId, articleId]) constraint in the schema.
          */
         userId_articleId: {
           userId,

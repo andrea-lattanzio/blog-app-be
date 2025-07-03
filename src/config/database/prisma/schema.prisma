@@ -21,18 +21,18 @@ enum UserRole {
  * User model
  */
 model User {
-  id            String       @id @default(uuid())
-  name          String
-  lastname      String
-  email         String       @unique
-  password      String?
-  authProvider  AuthProvider
-  role          UserRole     @default(Reader)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  Article       Article[]
-  Comment       Comment[]
-  likedArticles Like[]
+  id           String       @id @default(uuid())
+  name         String
+  lastName     String
+  email        String       @unique
+  password     String?
+  authProvider AuthProvider
+  role         UserRole     @default(Reader)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  articles     Article[]
+  comments     Comment[]
+  likes        Like[]
 }
 
 /**
@@ -58,10 +58,10 @@ model Article {
  */
 model Like {
   id     String  @id @default(uuid())
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String?
 
-  Article   Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  article   Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
   articleId String?
 
   // unique constraint (user can like an article only once)
@@ -114,8 +114,8 @@ model Comment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  article   Article? @relation(fields: [articleID], references: [id], onDelete: Cascade)
-  articleID String?
+  article   Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String?
 
   author User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
@@ -133,7 +133,7 @@ model NewsletterSubscription {
   id        String   @id @default(uuid())
   email     String   @unique
   createdAt DateTime @default(now())
-  is_active Boolean  @default(true)
+  isActive  Boolean  @default(true)
 }
 
 /**

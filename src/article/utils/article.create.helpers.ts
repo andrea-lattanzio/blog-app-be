@@ -7,7 +7,7 @@ import {
 
 /**
  * These functions are used to create the nested data structure for creating an article.
- * The functions are moved to this seperate file to keep service method more readable.
+ * The functions are moved to this separate file to keep service method more readable.
  */
 
 export const createChapters = (chapters: CreateChapterDto[]): Prisma.ChapterCreateWithoutArticleInput[] => {
