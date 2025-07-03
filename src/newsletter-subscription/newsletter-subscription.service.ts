@@ -51,7 +51,7 @@ export class NewsletterSubscriptionService {
   ): Promise<NewsletterSubscription> {
     return this.prisma.newsletterSubscription.update({
       where: { email: updateNewsletterSubscriptionDto.email },
-      data: { is_active: false },
+      data: { isActive: false },
     });
   }
 }
