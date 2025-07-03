@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+import { AuthProvider, User, UserRole } from '@prisma/client';
 import { User as IUser } from 'src/identity/user/user.interface';
 import { UserService } from 'src/identity/user/user.service';
 import {
@@ -36,6 +36,7 @@ export class AuthService {
     const payload = {
       email: validatedUser.email,
       id: validatedUser.id,
+      role: validatedUser.role
     };
     return {
       token: await this.jwtSrv.signAsync(payload),
@@ -52,7 +53,7 @@ export class AuthService {
     );
     const newUser: IUser = {
       ...user,
-      authProvider: 'Local',
+      authProvider: AuthProvider.Local,
       password: hashedPassword,
     };
     await this.userSrv.create(newUser);

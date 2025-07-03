@@ -12,6 +12,11 @@ enum AuthProvider {
   Google
 }
 
+enum UserRole {
+  Reader
+  Author
+}
+
 /**
  * User model
  */
@@ -22,6 +27,7 @@ model User {
   email         String       @unique
   password      String?
   authProvider  AuthProvider
+  role          UserRole     @default(Reader)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   Article       Article[]

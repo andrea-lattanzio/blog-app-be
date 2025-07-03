@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -23,11 +24,14 @@ import { Public } from 'src/shared/decorators/public.decorator';
 import { ArticleQueryDto } from './dto/article.query.dto';
 import { paginateResponse } from 'src/shared/presenter/paginateResponse';
 import { OptionalAuth } from 'src/shared/decorators/optionalAuth.decorator';
+import { Role } from 'src/shared/decorators/user.role.decorator';
+import { UserRole } from '@prisma/client';
+import { RoleGuard } from 'src/shared/guards/role.guard';
 
 @ApiTags('article')
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(private readonly articleService: ArticleService) { }
 
   /**
    * Creates a new article along with its related chapters, paragraphs and code sections.
@@ -36,6 +40,8 @@ export class ArticleController {
    * @returns The newly created article without related entities.
    */
   @Post()
+  @Role(UserRole.Author)
+  @UseGuards(RoleGuard)
   @ApiOperation({
     summary: 'Create Article',
     description:
