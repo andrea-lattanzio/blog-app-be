@@ -64,7 +64,7 @@ export class CommentService {
   async findAll(articleId: string): Promise<CommentDto[]> {
     const comments = await this.prisma.comment.findMany({
       where: {
-        articleID: articleId,
+        articleId: articleId,
         parentId: null,
       },
     });

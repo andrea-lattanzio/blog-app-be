@@ -18,7 +18,7 @@ export class CreateCommentDto {
 
 export class CreateReplyDto {
   @IsUUID()
-  articleID: string;
+  articleId: string;
 
   @IsUUID()
   parentId: string;
