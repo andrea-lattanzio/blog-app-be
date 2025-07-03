@@ -45,8 +45,8 @@ export class AuthService {
   }
 
   async register(user: RegisterRequestDto): Promise<LoginResponseDto> {
-    const existingUser = await this.userSrv.findOneByEmail(user.email);
-    if (existingUser) throw new BadRequestException(ERROR_EMAIL_EXISTS);
+    // const existingUser = await this.userSrv.findOneByEmail(user.email);
+    // if (existingUser) throw new BadRequestException(ERROR_EMAIL_EXISTS);
     const hashedPassword = await bcrypt.hashSync(
       user.password,
       BCRYPT_HASH_SALT,
