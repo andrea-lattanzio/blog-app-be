@@ -1,14 +1,11 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { CreateCommentDto, CreateReplyDto } from './dto/create-comment.dto';
+import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import {
-  ApiBody,
-  ApiCreatedResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { CommentDto } from './dto/body';
 import { Public } from 'src/shared/decorators/public.decorator';
 
 @ApiTags('comment')
@@ -20,14 +17,6 @@ export class CommentController {
   @ApiOperation({
     summary: 'Create Comment',
     description: 'This endpoint creates a new comment entity',
-  })
-  @ApiBody({
-    description: 'Comment information',
-    type: CreateCommentDto,
-  })
-  @ApiCreatedResponse({
-    description: 'The comment was succesfully created',
-    type: CommentDto,
   })
   create(
     @GetUser('id') userId: string,

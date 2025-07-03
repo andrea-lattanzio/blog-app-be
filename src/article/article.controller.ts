@@ -33,12 +33,6 @@ import { RoleGuard } from 'src/shared/guards/role.guard';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) { }
 
-  /**
-   * Creates a new article along with its related chapters, paragraphs and code sections.
-   *
-   * @param createArticleDto - The article information (including chapters, paragraphs and code sections).
-   * @returns The newly created article without related entities.
-   */
   @Post()
   @Role(UserRole.Author)
   @UseGuards(RoleGuard)
@@ -47,14 +41,6 @@ export class ArticleController {
     description:
       'This endpoint creates a new article entity as well as related chapters, paragraphs and code sections',
   })
-  @ApiBody({
-    description: 'Article information',
-    type: CreateArticleDto,
-  })
-  @ApiCreatedResponse({
-    description: 'The article was succesfully created',
-    type: ArticleDto,
-  })
   create(
     @GetUser('id') userId: string,
     @Body() createArticleDto: CreateArticleDto,
@@ -62,10 +48,6 @@ export class ArticleController {
     return this.articleService.create(userId, createArticleDto);
   }
 
-  /**
-   *
-   * @returns A list of all articles without related entities.
-   */
   @Public()
   @Get()
   @ApiOperation({
@@ -91,9 +73,6 @@ export class ArticleController {
     return paginateResponse<ArticleDto>(page, items, total);
   }
 
-  /**
-   * @returns The latest three articles
-   */
   @Public()
   @Get('/latest-three')
   @ApiOperation({
@@ -105,11 +84,7 @@ export class ArticleController {
     return this.articleService.getLatestThree();
   }
 
-  /**
-   *
-   * @param id The article id.
-   * @returns A single article along with all the related entities.
-   */
+
   @OptionalAuth()
   @Get(':id')
   @ApiOperation({
@@ -121,12 +96,7 @@ export class ArticleController {
     return this.articleService.findOne(id, userId);
   }
 
-  /**
-   *
-   * @param id The article id.
-   * @param updateArticleDto The updated article info (including updated related entities).
-   * @returns The updated article.
-   */
+  
   @Patch(':id')
   @ApiOperation({
     summary: 'Update Article',
@@ -136,11 +106,6 @@ export class ArticleController {
     return this.articleService.update(id, updateArticleDto);
   }
 
-  /**
-   *
-   * @param id The article id.
-   * @returns.
-   */
   @Post('/like/:id')
   @ApiOperation({
     summary: 'Like Article',
@@ -153,11 +118,6 @@ export class ArticleController {
     return this.articleService.addLike(userId, articleId);
   }
 
-  /**
-   *
-   * @param id The article id.
-   * @returns.
-   */
   @Delete('/like/:id')
   @ApiOperation({
     summary: 'Remove Article Like',
@@ -170,11 +130,6 @@ export class ArticleController {
     return this.articleService.removeLike(userId, articleId);
   }
 
-  /**
-   *
-   * @param id The article id.
-   * @returns The deleted article along with all the related entities.
-   */
   @Delete(':id')
   @ApiOperation({
     summary: 'Delete Article',
