@@ -1,10 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { firstValueFrom, Observable } from 'rxjs';
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
-  constructor(private reflector: Reflector) {
+  constructor(private readonly reflector: Reflector) {
     super();
   }
   async canActivate(context: ExecutionContext): Promise<boolean> {

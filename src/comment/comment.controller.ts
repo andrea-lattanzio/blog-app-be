@@ -1,12 +1,13 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { CommentService } from './comment.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { GetUser } from 'src/shared/decorators/getUser.decorator';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { Public } from 'src/shared/decorators/public.decorator';
+
+import { CommentService } from './comment.service';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @ApiTags('comment')
 @Controller('comment')
@@ -18,7 +19,7 @@ export class CommentController {
     summary: 'Create Comment',
     description: 'This endpoint creates a new comment entity',
   })
-  create(
+  async create(
     @GetUser('id') userId: string,
     @Body() createCommentDto: CreateCommentDto,
   ) {
@@ -32,7 +33,7 @@ export class CommentController {
     description:
       'This endpoint returns a list of all comments without their replies',
   })
-  findAll(@Param('id') articleId: string) {
+  async findAll(@Param('id') articleId: string) {
     return this.commentService.findAll(articleId);
   }
 
@@ -42,7 +43,7 @@ export class CommentController {
     summary: 'Get one comment',
     description: 'This endpoint returns a single comment with its replies',
   })
-  findOne(@Param('id') commentId: string) {
+  async findOne(@Param('id') commentId: string) {
     return this.commentService.findOne(commentId);
   }
 }

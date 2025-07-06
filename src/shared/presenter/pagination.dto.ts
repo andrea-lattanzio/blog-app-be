@@ -1,5 +1,5 @@
-import { IsInt, Min, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { IsInt, IsOptional, Min } from 'class-validator';
 
 export enum ResponseStatus {
   SUCCESS = 'success',

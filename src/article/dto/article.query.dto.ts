@@ -1,6 +1,7 @@
-import { IsEnum, IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
-import { ArticleTag } from './create-article.dto';
+import { IsEnum, IsIn, IsOptional, IsString } from 'class-validator';
 import { PaginationQueryDto } from 'src/shared/presenter/pagination.dto';
+
+import { ArticleTag } from './create-article.dto';
 
 export class ArticleQueryDto extends PaginationQueryDto {
   @IsOptional()

@@ -1,32 +1,31 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ArticleService } from './article.service';
-import { CreateArticleDto } from './dto/create-article.dto';
 import {
-  ApiBody,
-  ApiCreatedResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ArticleDto } from './dto/body';
-import { UpdateArticleDto } from './dto/update-article.dto';
-import { GetUser } from 'src/shared/decorators/getUser.decorator';
-import { Public } from 'src/shared/decorators/public.decorator';
-import { ArticleQueryDto } from './dto/article.query.dto';
-import { paginateResponse } from 'src/shared/presenter/paginateResponse';
-import { OptionalAuth } from 'src/shared/decorators/optionalAuth.decorator';
-import { Role } from 'src/shared/decorators/user.role.decorator';
 import { UserRole } from '@prisma/client';
+import { GetUser } from 'src/shared/decorators/getUser.decorator';
+import { OptionalAuth } from 'src/shared/decorators/optionalAuth.decorator';
+import { Public } from 'src/shared/decorators/public.decorator';
+import { Role } from 'src/shared/decorators/user.role.decorator';
 import { RoleGuard } from 'src/shared/guards/role.guard';
+import { paginateResponse } from 'src/shared/presenter/paginateResponse';
+
+import { ArticleService } from './article.service';
+import { ArticleQueryDto } from './dto/article.query.dto';
+import { ArticleDto } from './dto/body';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
 
 @ApiTags('article')
 @Controller('article')
@@ -41,7 +40,7 @@ export class ArticleController {
     description:
       'This endpoint creates a new article entity as well as related chapters, paragraphs and code sections',
   })
-  create(
+  async create(
     @GetUser('id') userId: string,
     @Body() createArticleDto: CreateArticleDto,
   ) {
@@ -67,6 +66,7 @@ export class ArticleController {
       ]);
     } catch (error) {
       console.error(error);
+
       return paginateResponse<ArticleDto>(page, [], total, true);
     }
 
@@ -84,7 +84,6 @@ export class ArticleController {
     return this.articleService.getLatestThree();
   }
 
-
   @OptionalAuth()
   @Get(':id')
   @ApiOperation({
@@ -92,17 +91,16 @@ export class ArticleController {
     description:
       'This endpoint returns a single article along with all the related entities',
   })
-  findOne(@Param('id') id: string, @GetUser('id') userId: string) {
+  async findOne(@Param('id') id: string, @GetUser('id') userId: string) {
     return this.articleService.findOne(id, userId);
   }
 
-  
   @Patch(':id')
   @ApiOperation({
     summary: 'Update Article',
     description: 'This endpoint updates an article',
   })
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+  async update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articleService.update(id, updateArticleDto);
   }
 
@@ -111,9 +109,9 @@ export class ArticleController {
     summary: 'Like Article',
     description: 'This endpoint adds a like to an article',
   })
-  addLike(
+  async addLike(
     @GetUser('id') userId: string,
-    @Param('id') articleId: string
+    @Param('id') articleId: string,
   ) {
     return this.articleService.addLike(userId, articleId);
   }
@@ -123,9 +121,9 @@ export class ArticleController {
     summary: 'Remove Article Like',
     description: 'This endpoint removes a like to an article',
   })
-  removeLike(
+  async removeLike(
     @GetUser('id') userId: string,
-    @Param('id') articleId: string
+    @Param('id') articleId: string,
   ) {
     return this.articleService.removeLike(userId, articleId);
   }
@@ -135,7 +133,7 @@ export class ArticleController {
     summary: 'Delete Article',
     description: 'This endpoint removes an article',
   })
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.articleService.remove(id);
   }
 }

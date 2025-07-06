@@ -1,10 +1,10 @@
 import { ValidationError } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import {
+  IsEmail,
   IsEnum,
   IsNumber,
   IsString,
-  IsEmail,
   IsUrl,
   validateSync,
 } from 'class-validator';

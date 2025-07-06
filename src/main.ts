@@ -1,10 +1,14 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { writeFileSync } from 'fs';
+
+import type { OpenAPIObject } from '@nestjs/swagger';
+
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+
+import { AppModule } from './app.module';
 import { PrismaExceptionsFilter } from './shared/exception-filters/PrismaExceptionFilter';
 
 async function bootstrap() {
@@ -23,7 +27,6 @@ async function bootstrap() {
   app.use(helmet({ contentSecurityPolicy: false }));
 
   app.useGlobalFilters(new PrismaExceptionsFilter());
-
 
   const swaggerConfig: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
     .setTitle('Blog-app API')

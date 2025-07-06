@@ -1,9 +1,9 @@
-import { Prisma } from '@prisma/client';
-import {
+import type {
   UpdateChapterDto,
   UpdateCodeSectionDto,
   UpdateParagraphDto,
 } from '../dto/update-article.dto';
+import type { Prisma } from '@prisma/client';
 
 /**
  * These functions are used to create the nested data structure for updating an article.
@@ -29,10 +29,10 @@ export const updateParagraphs = (paragraphs: UpdateParagraphDto[]): Prisma.Parag
       ...(paragraph.text ? { text: paragraph.text } : {}),
       ...(paragraph.codeSections
         ? {
-            codeSections: {
-              update: updateCodeSections(paragraph.codeSections),
-            },
-          }
+          codeSections: {
+            update: updateCodeSections(paragraph.codeSections),
+          },
+        }
         : {}),
     },
   }));

@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { DatabaseService } from 'src/config/database/database.service';
-import { createChapters } from './utils/article.create.helpers';
-import { ArticleDto } from './dto/body';
-import { fullArticle } from './utils/article.query';
-import { UpdateArticleDto } from './dto/update-article.dto';
-import { updateChapters } from './utils/article.update.helpers';
-import { ArticleQueryDto } from './dto/article.query.dto';
 import { Prisma } from '@prisma/client';
+import { DatabaseService } from 'src/config/database/database.service';
+
+import { ArticleQueryDto } from './dto/article.query.dto';
+import { ArticleDto } from './dto/body';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
+import { createChapters } from './utils/article.create.helpers';
+import { fullArticle } from './utils/article.query';
+import { updateChapters } from './utils/article.update.helpers';
 
 @Injectable()
 export class ArticleService {
@@ -30,6 +31,7 @@ export class ArticleService {
         chapters: { create: createChapters(chapters) },
       },
     });
+
     return new ArticleDto(createdArticle);
   }
 
@@ -60,7 +62,7 @@ export class ArticleService {
     if (sortBy) {
       if (sortBy === 'mostRecent') {
         query.orderBy = {
-          createdAt: 'desc'
+          createdAt: 'desc',
         };
       }
       if (sortBy === 'mostSeen') {
@@ -71,6 +73,7 @@ export class ArticleService {
     } else if (sortBy === 'best') { }
 
     const articles = await this.prisma.article.findMany(query);
+
     return ArticleDto.fromEntities(articles);
   }
 
@@ -113,6 +116,7 @@ export class ArticleService {
 
     const result = new ArticleDto(article);
     userId ? result.liked = await this.isLiked(articleId, userId) : null;
+
     return result;
   }
 
@@ -132,10 +136,11 @@ export class ArticleService {
       where: {
         userId_articleId: {
           userId,
-          articleId
-        }
-      }
+          articleId,
+        },
+      },
     });
+
     return !!like;
   }
 
@@ -154,13 +159,14 @@ export class ArticleService {
         chapters: { update: updateChapters(updateArticleDto.chapters) },
       },
     });
+
     return new ArticleDto(updatedArticle);
   }
 
   /**
-   * This method adds a like to an article by 
+   * This method adds a like to an article by
    * adding a record to the likes join table
-   * 
+   *
    * @param userId the loggedUser id
    * @param articleId the article id to remove like from
    */
@@ -168,8 +174,8 @@ export class ArticleService {
     await this.prisma.like.create({
       data: {
         userId,
-        articleId
-      }
+        articleId,
+      },
     });
   }
 
@@ -177,7 +183,7 @@ export class ArticleService {
    * This method removes a like from an article
    * by deleting the record to the likes join table
    * where both the user and the article id match
-   * 
+   *
    * @param userId the loggedUser id
    * @param articleId the article id to remove like from
    */
@@ -185,15 +191,15 @@ export class ArticleService {
     await this.prisma.like.delete({
       where: {
         /**
-         * userId_articleId is an object created by prisma for 
+         * userId_articleId is an object created by prisma for
          * queries that need to uniquely identify a record by two fields like in this case.
          * This is made possible by having defined the @@unique([userId, articleId]) constraint in the schema.
          */
         userId_articleId: {
           userId,
-          articleId
-        }
-      }
+          articleId,
+        },
+      },
     });
   }
 
@@ -204,6 +210,7 @@ export class ArticleService {
    */
   async remove(id: string): Promise<ArticleDto> {
     const deletedArticle = await this.prisma.article.delete({ where: { id } });
+
     return new ArticleDto(deletedArticle);
   }
 }

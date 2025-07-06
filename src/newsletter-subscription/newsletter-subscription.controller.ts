@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Patch } from '@nestjs/common';
-import { NewsletterSubscriptionService } from './newsletter-subscription.service';
+import { Body, Controller, Patch, Post } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
+import { Public } from 'src/shared/decorators/public.decorator';
+
 import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscription.dto';
 import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
-import { Public } from 'src/shared/decorators/public.decorator';
-import { ApiOperation } from '@nestjs/swagger';
+import { NewsletterSubscriptionService } from './newsletter-subscription.service';
 
 @Public()
 @Controller('newsletter-subscription')
@@ -16,7 +17,7 @@ export class NewsletterSubscriptionController {
     description:
       'This endpoint subscribes user to newsletter',
   })
-  create(@Body() createNewsletterSubscriptionDto: CreateNewsletterSubscriptionDto) {
+  async create(@Body() createNewsletterSubscriptionDto: CreateNewsletterSubscriptionDto) {
     return this.newsletterSubscriptionService.create(createNewsletterSubscriptionDto);
   }
 
@@ -26,7 +27,7 @@ export class NewsletterSubscriptionController {
     description:
       'This endpoint unsubscribe user from newsletter',
   })
-  disable(@Body() updateNewsletterSubscriptionDto: UpdateNewsletterSubscriptionDto) {
+  async disable(@Body() updateNewsletterSubscriptionDto: UpdateNewsletterSubscriptionDto) {
     return this.newsletterSubscriptionService.disable(updateNewsletterSubscriptionDto);
   }
 }

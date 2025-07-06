@@ -1,5 +1,5 @@
 import { Comment } from '@prisma/client';
-import { Exclude, plainToInstance, Type } from 'class-transformer';
+import { Exclude, Type, plainToInstance } from 'class-transformer';
 
 type FullComment = Comment & { replies?: Comment[] };
 

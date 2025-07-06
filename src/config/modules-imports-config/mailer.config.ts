@@ -1,5 +1,5 @@
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
 const mailerModuleConfig = {
   imports: [ConfigModule],

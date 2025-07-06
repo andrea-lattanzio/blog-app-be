@@ -15,7 +15,6 @@ export class CreateCommentDto {
   text: string;
 }
 
-
 export class CreateReplyDto {
   @IsUUID()
   articleId: string;
@@ -28,6 +27,4 @@ export class CreateReplyDto {
   @Length(1, 500)
   text: string;
 }
-
-
 

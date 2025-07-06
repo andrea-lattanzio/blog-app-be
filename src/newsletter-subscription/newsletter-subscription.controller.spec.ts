@@ -1,4 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
+
+import { Test } from '@nestjs/testing';
+
 import { NewsletterSubscriptionController } from './newsletter-subscription.controller';
 import { NewsletterSubscriptionService } from './newsletter-subscription.service';
 

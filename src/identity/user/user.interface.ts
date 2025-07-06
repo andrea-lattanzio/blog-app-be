@@ -1,4 +1,4 @@
-import { AuthProvider, UserRole } from "@prisma/client";
+import type { AuthProvider, UserRole } from '@prisma/client';
 
 export interface User {
   name: string;

@@ -1,5 +1,5 @@
 import { Article, Chapter } from '@prisma/client';
-import { Exclude, plainToInstance, Type } from 'class-transformer';
+import { Exclude, Type, plainToInstance } from 'class-transformer';
 
 type FullArticle = Article & { chapters?: Chapter[] };
 
@@ -52,7 +52,7 @@ export class ArticleDto {
   createdAt: string;
   @Exclude()
   userId: string;
-  
+
   @Type(() => ChapterDto)
   chapters: ChapterDto[];
 

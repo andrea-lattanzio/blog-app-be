@@ -1,4 +1,6 @@
-import { PaginationResultDto, ResponseStatus } from './pagination.dto';
+import type { PaginationResultDto } from './pagination.dto';
+
+import { ResponseStatus } from './pagination.dto';
 
 /**
  * Paginates the response data by structuring it in a standard format.

@@ -31,6 +31,7 @@ export class LocalAuthGuard extends AuthGuard('local') implements CanActivate {
         message: errorMessages,
       });
     }
+
     return super.canActivate(context) as Promise<boolean>;
   }
 }

@@ -1,6 +1,7 @@
+import { randomBytes } from 'crypto';
+
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { randomBytes } from 'crypto';
 import { DatabaseService } from 'src/config/database/database.service';
 import { generateFullWebLink } from 'src/shared/utils/url.utils';
 
@@ -16,11 +17,11 @@ export class PasswordResetService {
     await this.prisma.passwordResetLog.updateMany({
       where: {
         email,
-        used: false
+        used: false,
       },
       data: {
-        used: true
-      }
+        used: true,
+      },
     });
 
     // create new token
@@ -30,7 +31,7 @@ export class PasswordResetService {
         expiresAt: new Date(Date.now() + 900000),
         email,
         token,
-      }
+      },
     });
 
     return token;

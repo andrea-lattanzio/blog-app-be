@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateCommentDto, CreateReplyDto } from './dto/create-comment.dto';
 import { DatabaseService } from 'src/config/database/database.service';
-import { CommentDto } from './dto/body';
+
 import { NO_SUBREPLY } from './constants/comment.constants';
+import { CommentDto } from './dto/body';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Injectable()
 export class CommentService {
@@ -68,6 +69,7 @@ export class CommentService {
         parentId: null,
       },
     });
+
     return CommentDto.fromEntities(comments);
   }
 
@@ -84,6 +86,7 @@ export class CommentService {
       where: { id: commentId },
       include: { replies: true },
     });
+
     return new CommentDto(comment);
   }
 }

@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/config/database/database.service';
-import { User } from './user.interface';
-import { randomBytes } from 'crypto';
+
 import { UserInfoDto } from '../auth/dto/auth.dto';
+
+import { User } from './user.interface';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: DatabaseService) { }
 
   async create(user: User) {
-    return await this.prisma.user.create({ data: user });
+    return this.prisma.user.create({ data: user });
   }
 
   /**
@@ -21,6 +22,7 @@ export class UserService {
     const deletedUser = await this.prisma.user.delete({
       where: { id },
     });
+
     return new UserInfoDto(deletedUser);
   }
 
@@ -28,13 +30,13 @@ export class UserService {
     await this.prisma.user.update({
       where: { email },
       data: {
-        password: hashedPassword
-      }
-    })
+        password: hashedPassword,
+      },
+    });
   }
 
   async findOneByEmail(email: string) {
-    return await this.prisma.user.findUnique({
+    return this.prisma.user.findUnique({
       where: { email },
     });
   }

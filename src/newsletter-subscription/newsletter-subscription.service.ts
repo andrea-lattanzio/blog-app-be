@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { NewsletterSubscription } from '@prisma/client';
+import { DatabaseService } from 'src/config/database/database.service';
+import { BaseMailContext, MailOptions } from 'src/mailer/mail.utils';
+import { MailSenderService } from 'src/mailer/mailer.service';
+
 import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscription.dto';
 import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
-import { DatabaseService } from 'src/config/database/database.service';
-import { NewsletterSubscription } from '@prisma/client';
-import { MailSenderService } from 'src/mailer/mailer.service';
-import { BaseMailContext, MailOptions } from 'src/mailer/mail.utils';
 
 @Injectable()
 export class NewsletterSubscriptionService {

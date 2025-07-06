@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ArticleService } from './article.service';
-import { ArticleController } from './article.controller';
 import { DatabaseModule } from 'src/config/database/database.module';
+
+import { ArticleController } from './article.controller';
+import { ArticleService } from './article.service';
 
 @Module({
   imports: [DatabaseModule],

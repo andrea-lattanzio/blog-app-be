@@ -1,9 +1,9 @@
-import { Prisma } from '@prisma/client';
-import {
+import type {
   CreateChapterDto,
   CreateCodeSectionDto,
   CreateParagraphDto,
 } from '../dto/create-article.dto';
+import type { Prisma } from '@prisma/client';
 
 /**
  * These functions are used to create the nested data structure for creating an article.
