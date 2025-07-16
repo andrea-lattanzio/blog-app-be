@@ -15,6 +15,7 @@ import { ResponseStatus } from './pagination.dto';
  * @example
  * const paginatedResponse = paginateResponse(1, customers, 100);
  */
+/* eslint-disable @typescript-eslint/max-params */
 export function paginateResponse<T>(
   page: number,
   items: T[],

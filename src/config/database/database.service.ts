@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { JsPromise } from '@prisma/client/runtime/library';
 
 /**
  * Database service
@@ -7,7 +8,7 @@ import { PrismaClient } from '@prisma/client';
  */
 @Injectable()
 export class DatabaseService extends PrismaClient implements OnModuleInit {
-  async onModuleInit() {
+  async onModuleInit(): JsPromise<void> {
     await this.$connect();
   }
 }

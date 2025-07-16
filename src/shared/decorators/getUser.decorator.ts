@@ -2,6 +2,7 @@ import type { ExecutionContext } from '@nestjs/common';
 
 import { createParamDecorator } from '@nestjs/common';
 
+/* eslint-disable */
 export const GetUser = createParamDecorator(
   (data: string | undefined, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();

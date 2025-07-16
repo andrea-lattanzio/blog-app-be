@@ -45,9 +45,9 @@ export class CreateChapterDto {
 }
 
 export enum ArticleTag {
-  angular,
-  react,
-  node,
+  ANGULAR = 'angular',
+  REACT = 'react',
+  NODE = 'node',
 }
 
 export class CreateArticleDto {

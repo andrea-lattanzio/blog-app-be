@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthProvider, User } from '@prisma/client';
+import { AuthProvider, User, UserRole } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { User as IUser } from 'src/identity/user/user.interface';
 import { UserService } from 'src/identity/user/user.service';
+import { assertIsUser } from 'src/shared/utils/auth';
 
 import {
   BCRYPT_HASH_SALT,
@@ -13,6 +14,7 @@ import {
 import {
   LoginResponseDto,
   RegisterRequestDto,
+  TokenPayload,
   UserInfoDto,
 } from '../dto/auth.dto';
 
@@ -23,18 +25,21 @@ export class AuthService {
     private readonly jwtSrv: JwtService,
   ) { }
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userSrv.findOneByEmail(email);
+  async validateUser(email: string, password: string): Promise<User> {
+    const user: User | null = await this.userSrv.findOneByEmail(email);
     if (!user) throw new BadRequestException(ERROR_USER_NOT_FOUND);
-    const match = bcrypt.compareSync(password, user.password);
+
+    assertIsUser(user);
+    const match: boolean = bcrypt.compareSync(password, user.password);
     if (!match) throw new BadRequestException(ERROR_INVALID_CREDENTIALS);
 
     return user;
   }
 
-  async login(validatedUser: IUser): Promise<LoginResponseDto> {
-    const user = await this.userSrv.findOneByEmail(validatedUser.email);
-    const payload = {
+  async login(validatedUser: User): Promise<LoginResponseDto> {
+    const user: User | null = await this.userSrv.findOneByEmail(validatedUser.email);
+    assertIsUser(user);
+    const payload: TokenPayload = {
       email: validatedUser.email,
       id: validatedUser.id,
       role: validatedUser.role,
@@ -47,9 +52,7 @@ export class AuthService {
   }
 
   async register(user: RegisterRequestDto): Promise<LoginResponseDto> {
-    // const existingUser = await this.userSrv.findOneByEmail(user.email);
-    // if (existingUser) throw new BadRequestException(ERROR_EMAIL_EXISTS);
-    const hashedPassword = await bcrypt.hashSync(
+    const hashedPassword: string = bcrypt.hashSync(
       user.password,
       BCRYPT_HASH_SALT,
     );
@@ -57,21 +60,24 @@ export class AuthService {
       ...user,
       authProvider: AuthProvider.Local,
       password: hashedPassword,
+      role: UserRole.Reader,
     };
     await this.userSrv.create(newUser);
-    const createdUser = await this.userSrv.findOneByEmail(user.email);
+    const createdUser: User | null = await this.userSrv.findOneByEmail(user.email);
+    assertIsUser(createdUser);
 
     return this.login(createdUser);
   }
 
-  async profile(user: IUser): Promise<User> {
-    if (!user) return;
+  async profile(loggedUser: User): Promise<User> {
+    const user: User | null = await this.userSrv.findOneByEmail(loggedUser.email);
+    assertIsUser(user);
 
-    return this.userSrv.findOneByEmail(user.email);
+    return user;
   }
 
   async changePassword(email: string, newPassword: string): Promise<void> {
-    const hashedPassword = await bcrypt.hashSync(newPassword, BCRYPT_HASH_SALT);
+    const hashedPassword: string = bcrypt.hashSync(newPassword, BCRYPT_HASH_SALT);
     await this.userSrv.updatePassword(email, hashedPassword);
   }
 }

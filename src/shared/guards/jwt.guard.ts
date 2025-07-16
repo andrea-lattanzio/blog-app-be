@@ -8,13 +8,13 @@ export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
   }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // If endpoint is marked as public the guard lets the request go through
-    const isPublic = this.reflector.getAllAndOverride('isPublic', [
+    const isPublic: string = this.reflector.getAllAndOverride('isPublic', [
       context.getHandler(),
       context.getClass(),
     ]);
     if (isPublic) return true;
 
-    const allowOptionalAuth = this.reflector.getAllAndOverride('allowOptionalAuth', [
+    const allowOptionalAuth: string = this.reflector.getAllAndOverride('allowOptionalAuth', [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -23,8 +23,7 @@ export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
         // awaiting the result of passport AuthGuard logic to catch any error
         return await super.canActivate(context) as boolean;
       } catch (error) {
-        // if any error is catched the request still goes through as the endpoint is marked
-        // with optional auth decorator
+        // if any error is catched the request still goes through as the endpoint is marked with optional auth decorator
         return true;
       }
     }

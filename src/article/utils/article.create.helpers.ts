@@ -11,21 +11,21 @@ import type { Prisma } from '@prisma/client';
  */
 
 export const createChapters = (chapters: CreateChapterDto[]): Prisma.ChapterCreateWithoutArticleInput[] => {
-  return chapters.map((chapter) => ({
+  return chapters.map((chapter: CreateChapterDto) => ({
     title: chapter.title,
     paragraphs: { create: createChapterContent(chapter.paragraphs) },
   }));
 };
 
 const createChapterContent = (paragraphs: CreateParagraphDto[]): Prisma.ParagraphCreateWithoutChapterInput[] => {
-  return paragraphs.map((paragraph) => ({
+  return paragraphs.map((paragraph: CreateParagraphDto) => ({
     text: paragraph.text,
     codeSections: { create: createCodeSection(paragraph.codeSections) },
   }));
 };
 
 const createCodeSection = (sections: CreateCodeSectionDto[]): Prisma.CodeSectionCreateWithoutParagraphInput[] => {
-  return sections.map((section) => ({
+  return sections.map((section: CreateCodeSectionDto) => ({
     language: section.language,
     code: section.code,
     caption: section.caption,

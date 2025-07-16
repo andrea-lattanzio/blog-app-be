@@ -1,9 +1,9 @@
 import { Body, Controller, Patch, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
+import { NewsletterSubscription } from '@prisma/client';
 import { Public } from 'src/shared/decorators/public.decorator';
 
-import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscription.dto';
-import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
+import { NewsletterSubscriptionDto } from './dto/newsletter-subscription.dto';
 import { NewsletterSubscriptionService } from './newsletter-subscription.service';
 
 @Public()
@@ -17,8 +17,8 @@ export class NewsletterSubscriptionController {
     description:
       'This endpoint subscribes user to newsletter',
   })
-  async create(@Body() createNewsletterSubscriptionDto: CreateNewsletterSubscriptionDto) {
-    return this.newsletterSubscriptionService.create(createNewsletterSubscriptionDto);
+  async create(@Body() newsletterSub: NewsletterSubscriptionDto): Promise<NewsletterSubscription> {
+    return this.newsletterSubscriptionService.create(newsletterSub);
   }
 
   @Patch()
@@ -27,7 +27,7 @@ export class NewsletterSubscriptionController {
     description:
       'This endpoint unsubscribe user from newsletter',
   })
-  async disable(@Body() updateNewsletterSubscriptionDto: UpdateNewsletterSubscriptionDto) {
-    return this.newsletterSubscriptionService.disable(updateNewsletterSubscriptionDto);
+  async disable(@Body() newsletterSub: NewsletterSubscriptionDto): Promise<NewsletterSubscription> {
+    return this.newsletterSubscriptionService.disable(newsletterSub);
   }
 }

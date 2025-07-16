@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
+import { isStringDefined } from 'src/shared/utils/common';
 
 import { BaseMailContext, MailOptions } from './mail.utils';
 
@@ -15,11 +16,16 @@ export class MailSenderService {
     usersToNotify: string[],
     options: MailOptions<T>,
   ): Promise<void> {
-    const baseContext: BaseMailContext = { frontendBaseUri: this.configSrv.get<string>('frontend.baseUri') };
-    const context = { ...baseContext, ...(options.context || {}) };
+    const frontendBaseUri: string | undefined = this.configSrv.get<string>('frontend.baseUri');
+    let context: Partial<BaseMailContext> = { ...(options.context) };
 
-    usersToNotify.forEach((email) => {
-      this.mailerSrv.sendMail({
+    if (isStringDefined(frontendBaseUri)) {
+      const baseContext: BaseMailContext = { frontendBaseUri: frontendBaseUri };
+      context = { ...baseContext };
+    }
+
+    for (const email of usersToNotify) {
+      await this.mailerSrv.sendMail({
         from: this.configSrv.get('mail.from'),
         to: email,
         subject: options.subject,
@@ -27,6 +33,6 @@ export class MailSenderService {
         template: options.template,
         attachments: options.attachments,
       });
-    });
+    }
   }
 }

@@ -7,12 +7,13 @@ import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { Public } from 'src/shared/decorators/public.decorator';
 
 import { CommentService } from './comment.service';
+import { CommentDto } from './dto/body';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
 @ApiTags('comment')
 @Controller('comment')
 export class CommentController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) { }
 
   @Post()
   @ApiOperation({
@@ -22,7 +23,7 @@ export class CommentController {
   async create(
     @GetUser('id') userId: string,
     @Body() createCommentDto: CreateCommentDto,
-  ) {
+  ): Promise<CommentDto> {
     return this.commentService.create(userId, createCommentDto);
   }
 
@@ -33,7 +34,7 @@ export class CommentController {
     description:
       'This endpoint returns a list of all comments without their replies',
   })
-  async findAll(@Param('id') articleId: string) {
+  async findAll(@Param('id') articleId: string): Promise<CommentDto[]> {
     return this.commentService.findAll(articleId);
   }
 
@@ -43,7 +44,7 @@ export class CommentController {
     summary: 'Get one comment',
     description: 'This endpoint returns a single comment with its replies',
   })
-  async findOne(@Param('id') commentId: string) {
+  async findOne(@Param('id') commentId: string): Promise<CommentDto> {
     return this.commentService.findOne(commentId);
   }
 }

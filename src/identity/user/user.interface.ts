@@ -6,6 +6,6 @@ export interface User {
   id?: string;
   email: string;
   authProvider: AuthProvider;
-  role?: UserRole;
-  password?: string;
+  role: UserRole;
+  password: string;
 }

@@ -1,1 +1,1 @@
-export const NO_SUBREPLY = 'Cannot create a reply to a reply';
+export const NO_SUBREPLY: string = 'Cannot create a reply to a reply';

@@ -9,14 +9,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
+import { User } from '@prisma/client';
 import { GetUser } from 'src/shared/decorators/getUser.decorator';
 import { Public } from 'src/shared/decorators/public.decorator';
 import { LocalAuthGuard } from 'src/shared/guards/local.guard';
 
-import { User } from '../../user/user.interface';
 import { UserService } from '../../user/user.service';
 
 import {
+  LocalAuthRequest,
   LoginResponseDto,
   RegisterRequestDto,
   UserInfoDto,
@@ -35,9 +36,9 @@ export class AuthController {
   @ApiOperation({
     summary: 'Login',
     description:
-      'This endpoint receives an email and a password and after validating them, returns a jwt token with the encrypted user infos',
+      'Returns a jwt token with the encrypted user infos',
   })
-  async login(@Request() req): Promise<LoginResponseDto> {
+  async login(@Request() req: LocalAuthRequest): Promise<LoginResponseDto> {
     return this.authSrv.login(req.user);
   }
 
@@ -59,8 +60,8 @@ export class AuthController {
     summary: 'profile',
     description: 'This endpoint returns the currently logged in user info',
   })
-  async profile(@GetUser() user: User): Promise<UserInfoDto> {
-    const currentUser = await this.authSrv.profile(user);
+  async profile(@GetUser() loggedUser: User): Promise<UserInfoDto> {
+    const currentUser: User = await this.authSrv.profile(loggedUser);
 
     return new UserInfoDto(currentUser);
   }

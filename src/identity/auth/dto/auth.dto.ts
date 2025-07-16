@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User, UserRole } from '@prisma/client';
 import { Exclude, plainToInstance } from 'class-transformer';
 import {
   IsEmail,
@@ -16,6 +16,16 @@ export class LoginRequestDTO {
   @IsString({ message: 'Password must be a string' })
   @IsNotEmpty()
   password: string;
+}
+
+export interface LocalAuthRequest extends Request {
+  user: User;
+}
+
+export interface TokenPayload {
+  email: string;
+  id: string;
+  role: UserRole;
 }
 
 export class LoginResponseDto {
@@ -48,6 +58,7 @@ export class UserInfoDto {
   name: string;
   lastname: string;
   fullname: string;
+  role: UserRole;
 
   @Exclude()
   id: string;
@@ -57,8 +68,6 @@ export class UserInfoDto {
   authProvider: string;
   @Exclude()
   updatedAt: string;
-  @Exclude()
-  role: string;
 
   constructor(user: Partial<User>) {
     Object.assign(this, plainToInstance(UserInfoDto, user));

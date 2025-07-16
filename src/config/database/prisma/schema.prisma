@@ -25,7 +25,7 @@ model User {
   name         String
   lastName     String
   email        String       @unique
-  password     String?
+  password     String
   authProvider AuthProvider
   role         UserRole     @default(Reader)
   createdAt    DateTime     @default(now())

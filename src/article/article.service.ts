@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Article, Like, Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/config/database/database.service';
+import { isStringDefined } from 'src/shared/utils/common';
 
 import { ArticleQueryDto } from './dto/article.query.dto';
 import { ArticleDto } from './dto/body';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
 import { createChapters } from './utils/article.create.helpers';
 import { fullArticle } from './utils/article.query';
-import { updateChapters } from './utils/article.update.helpers';
 
 @Injectable()
 export class ArticleService {
@@ -24,7 +23,7 @@ export class ArticleService {
     createArticleDto: CreateArticleDto,
   ): Promise<ArticleDto> {
     const { chapters } = createArticleDto;
-    const createdArticle = await this.prisma.article.create({
+    const createdArticle: Article = await this.prisma.article.create({
       data: {
         ...createArticleDto,
         userId,
@@ -49,13 +48,16 @@ export class ArticleService {
     };
 
     if (tag) {
-      query.where.tag = tag;
+      query.where = { tag };
     }
 
-    if (titleContains) {
-      query.where.title = {
-        contains: titleContains,
-        mode: 'insensitive',
+    if (isStringDefined(titleContains)) {
+      query.where = {
+        ...query.where,
+        title: {
+          contains: titleContains,
+          mode: 'insensitive',
+        },
       };
     }
 
@@ -70,9 +72,16 @@ export class ArticleService {
           views: 'desc',
         };
       }
-    } else if (sortBy === 'best') { }
+      if (sortBy === 'best') {
+        query.orderBy = {
+          likes: {
+            _count: 'desc',
+          },
+        };
+      }
+    }
 
-    const articles = await this.prisma.article.findMany(query);
+    const articles: Article[] = await this.prisma.article.findMany(query);
 
     return ArticleDto.fromEntities(articles);
   }
@@ -90,7 +99,7 @@ export class ArticleService {
    * @returns The latest three articles ordered by creation date
    */
   async getLatestThree(): Promise<ArticleDto[]> {
-    const articles = await this.prisma.article.findMany({
+    const articles: Article[] = await this.prisma.article.findMany({
       orderBy: {
         createdAt: 'desc',
       },
@@ -107,20 +116,22 @@ export class ArticleService {
    * @returns A single article along with all the related entities.
    */
   async findOne(articleId: string, userId?: string): Promise<ArticleDto> {
-    const article = await this.prisma.article.findUniqueOrThrow({
+    const article: Article = await this.prisma.article.findUniqueOrThrow({
       where: { id: articleId },
       include: fullArticle.include,
     });
 
-    this.updateViews(articleId);
+    await this.updateViews(articleId);
 
-    const result = new ArticleDto(article);
-    userId ? result.liked = await this.isLiked(articleId, userId) : null;
+    const result: ArticleDto = new ArticleDto(article);
+    if (isStringDefined(userId)) {
+      result.liked = await this.isLiked(articleId, userId);
+    }
 
     return result;
   }
 
-  private async updateViews(articleId: string) {
+  private async updateViews(articleId: string): Promise<void> {
     await this.prisma.article.update({
       where: { id: articleId },
       data: {
@@ -132,7 +143,7 @@ export class ArticleService {
   }
 
   private async isLiked(articleId: string, userId: string): Promise<boolean> {
-    const like = await this.prisma.like.findUnique({
+    const like: Like | null = await this.prisma.like.findUnique({
       where: {
         userId_articleId: {
           userId,
@@ -144,24 +155,24 @@ export class ArticleService {
     return !!like;
   }
 
-  /**
-   *
-   * @param id The article id.
-   * @param updateArticleDto The updated article info.
-   * @returns The updated article, transformed into ArticleDto class.
-   */
-  async update(id: string, updateArticleDto: UpdateArticleDto) {
-    const { chapters, ...articleData } = updateArticleDto;
-    const updatedArticle = await this.prisma.article.update({
-      where: { id },
-      data: {
-        ...articleData,
-        chapters: { update: updateChapters(updateArticleDto.chapters) },
-      },
-    });
+  // /**
+  //  *
+  //  * @param id The article id.
+  //  * @param updateArticleDto The updated article info.
+  //  * @returns The updated article, transformed into ArticleDto class.
+  //  */
+  // async update(id: string, updateArticleDto: UpdateArticleDto) {
+  //   const { chapters, ...articleData } = updateArticleDto;
+  //   const updatedArticle = await this.prisma.article.update({
+  //     where: { id },
+  //     data: {
+  //       ...articleData,
+  //       chapters: { update: updateChapters(updateArticleDto.chapters) },
+  //     },
+  //   });
 
-    return new ArticleDto(updatedArticle);
-  }
+  //   return new ArticleDto(updatedArticle);
+  // }
 
   /**
    * This method adds a like to an article by
@@ -209,7 +220,7 @@ export class ArticleService {
    * @returns The deleted article.
    */
   async remove(id: string): Promise<ArticleDto> {
-    const deletedArticle = await this.prisma.article.delete({ where: { id } });
+    const deletedArticle: Article = await this.prisma.article.delete({ where: { id } });
 
     return new ArticleDto(deletedArticle);
   }

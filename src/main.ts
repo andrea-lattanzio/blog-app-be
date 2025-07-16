@@ -1,19 +1,21 @@
 import { writeFileSync } from 'fs';
 
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { OpenAPIObject } from '@nestjs/swagger';
 
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { isNumber } from 'class-validator';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { PrismaExceptionsFilter } from './shared/exception-filters/PrismaExceptionFilter';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
+async function bootstrap(): Promise<void> {
+  const app: NestExpressApplication = await NestFactory.create(AppModule);
+  const configService: ConfigService = app.get(ConfigService);
 
   app.setGlobalPrefix('/api');
   app.useGlobalPipes(
@@ -47,8 +49,14 @@ async function bootstrap() {
     { encoding: 'utf8' },
   );
 
-  const port: number = configService.get<number>('server.port') || 3000;
+  const envPort: number | undefined = configService.get<number>('server.port');
+  if (!isNumber(envPort)) { throw new Error('port is not defined'); }
+  const port: number = envPort || 3000;
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}/api`);
 }
-bootstrap();
+
+bootstrap().catch((error: unknown) => {
+  console.error('❌ Error starting application:', error);
+  process.exit(1);
+});

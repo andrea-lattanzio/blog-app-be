@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
   Query,
   UseGuards,
@@ -20,17 +19,17 @@ import { Public } from 'src/shared/decorators/public.decorator';
 import { Role } from 'src/shared/decorators/user.role.decorator';
 import { RoleGuard } from 'src/shared/guards/role.guard';
 import { paginateResponse } from 'src/shared/presenter/paginateResponse';
+import { PaginationResultDto } from 'src/shared/presenter/pagination.dto';
 
 import { ArticleService } from './article.service';
 import { ArticleQueryDto } from './dto/article.query.dto';
 import { ArticleDto } from './dto/body';
 import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
 
 @ApiTags('article')
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) { }
+  constructor(private readonly articleService: ArticleService) {}
 
   @Post()
   @Role(UserRole.Author)
@@ -43,7 +42,7 @@ export class ArticleController {
   async create(
     @GetUser('id') userId: string,
     @Body() createArticleDto: CreateArticleDto,
-  ) {
+  ): Promise<ArticleDto> {
     return this.articleService.create(userId, createArticleDto);
   }
 
@@ -54,7 +53,9 @@ export class ArticleController {
     description:
       'This endpoint returns a list of all articles without related entities',
   })
-  async findAll(@Query() findArticleDto: ArticleQueryDto) {
+  async findAll(
+    @Query() findArticleDto: ArticleQueryDto,
+  ): Promise<PaginationResultDto<ArticleDto>> {
     const { page } = findArticleDto;
 
     let total: number = 0;
@@ -91,18 +92,24 @@ export class ArticleController {
     description:
       'This endpoint returns a single article along with all the related entities',
   })
-  async findOne(@Param('id') id: string, @GetUser('id') userId: string) {
+  async findOne(
+    @Param('id') id: string,
+    @GetUser('id') userId: string,
+  ): Promise<ArticleDto> {
     return this.articleService.findOne(id, userId);
   }
 
-  @Patch(':id')
-  @ApiOperation({
-    summary: 'Update Article',
-    description: 'This endpoint updates an article',
-  })
-  async update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
-    return this.articleService.update(id, updateArticleDto);
-  }
+  // @Patch(':id')
+  // @ApiOperation({
+  //   summary: 'Update Article',
+  //   description: 'This endpoint updates an article',
+  // })
+  // async update(
+  //   @Param('id') id: string,
+  //   @Body() updateArticleDto: UpdateArticleDto,
+  // ): Promise<ArticleDto> {
+  //   return this.articleService.update(id, updateArticleDto);
+  // }
 
   @Post('/like/:id')
   @ApiOperation({
@@ -112,7 +119,7 @@ export class ArticleController {
   async addLike(
     @GetUser('id') userId: string,
     @Param('id') articleId: string,
-  ) {
+  ): Promise<void> {
     return this.articleService.addLike(userId, articleId);
   }
 
@@ -124,7 +131,7 @@ export class ArticleController {
   async removeLike(
     @GetUser('id') userId: string,
     @Param('id') articleId: string,
-  ) {
+  ): Promise<void> {
     return this.articleService.removeLike(userId, articleId);
   }
 
@@ -133,7 +140,7 @@ export class ArticleController {
     summary: 'Delete Article',
     description: 'This endpoint removes an article',
   })
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<ArticleDto> {
     return this.articleService.remove(id);
   }
 }

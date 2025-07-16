@@ -4,8 +4,7 @@ import { DatabaseService } from 'src/config/database/database.service';
 import { BaseMailContext, MailOptions } from 'src/mailer/mail.utils';
 import { MailSenderService } from 'src/mailer/mailer.service';
 
-import { CreateNewsletterSubscriptionDto } from './dto/create-newsletter-subscription.dto';
-import { UpdateNewsletterSubscriptionDto } from './dto/update-newsletter-subscription.dto';
+import { NewsletterSubscriptionDto } from './dto/newsletter-subscription.dto';
 
 @Injectable()
 export class NewsletterSubscriptionService {
@@ -20,23 +19,21 @@ export class NewsletterSubscriptionService {
    * @returns the newly created entity
    */
   async create(
-    createNewsletterSubscriptionDto: CreateNewsletterSubscriptionDto,
+    createNewsletterSubscriptionDto: NewsletterSubscriptionDto,
   ): Promise<NewsletterSubscription> {
-    const subscription = await this.prisma.newsletterSubscription.create({
+    const subscription: NewsletterSubscription = await this.prisma.newsletterSubscription.create({
       data: createNewsletterSubscriptionDto,
     });
 
-    if (subscription) {
-      const welcomeEmailOptions: MailOptions<BaseMailContext> = {
-        subject: 'Newsletter subscription confirmed.',
-        template: 'welcome',
-      };
+    const welcomeEmailOptions: MailOptions<BaseMailContext> = {
+      subject: 'Newsletter subscription confirmed.',
+      template: 'welcome',
+    };
 
-      this.mailer.send<BaseMailContext>(
-        [createNewsletterSubscriptionDto.email],
-        welcomeEmailOptions,
-      );
-    }
+    await this.mailer.send<BaseMailContext>(
+      [createNewsletterSubscriptionDto.email],
+      welcomeEmailOptions,
+    );
 
     return subscription;
   }
@@ -48,7 +45,7 @@ export class NewsletterSubscriptionService {
    * @returns
    */
   async disable(
-    updateNewsletterSubscriptionDto: UpdateNewsletterSubscriptionDto,
+    updateNewsletterSubscriptionDto: NewsletterSubscriptionDto,
   ): Promise<NewsletterSubscription> {
     return this.prisma.newsletterSubscription.update({
       where: { email: updateNewsletterSubscriptionDto.email },

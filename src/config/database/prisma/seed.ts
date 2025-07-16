@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { AuthProvider, PrismaClient, UserRole } from '@prisma/client';
 
 const prisma = new PrismaClient();

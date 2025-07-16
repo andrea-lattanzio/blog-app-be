@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Comment } from '@prisma/client';
 import { DatabaseService } from 'src/config/database/database.service';
+import { isDefined, isStringDefined } from 'src/shared/utils/common';
 
 import { NO_SUBREPLY } from './constants/comment.constants';
 import { CommentDto } from './dto/body';
@@ -7,33 +9,29 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly prisma: DatabaseService) {}
+  constructor(private readonly prisma: DatabaseService) { }
 
   /**
-   * Creates a new comment and links it to the logged user who is commenting,
-   * as well as to the article the user is commenting.
-   *
-   * If `parentId` is provided in the dto it means i am creating a reply,
-   * in this scenario i need to check that the parent comment
-   * is not a reply itself. (i cannot have multiple levels of replies).
+   * Creates a new comment with provided text and links the comment to the user who posted it.
+   * If ArticleId is defined in the DTO a top level comment will be created.
+   * If ParentCommentId is defind in the DTO a reply comment will be created.
    *
    * @param userId logged user id.
    * @param createCommentDto data.
    * @returns the newly created comment.
    */
-  async create(userId: string, createCommentDto: CreateCommentDto) {
-    if (createCommentDto.parentId) this.stopSubReply(createCommentDto.parentId);
-    const createdComment = await this.prisma.comment.create({
+  async create(userId: string, createCommentDto: CreateCommentDto): Promise<CommentDto> {
+    const { parentCommentId, text, articleId } = createCommentDto;
+    if (isStringDefined(parentCommentId)) await this.stopSubReply(parentCommentId);
+    const createdComment: Comment = await this.prisma.comment.create({
       data: {
-        text: createCommentDto.text,
+        text: text,
         author: { connect: { id: userId } },
-        // if articleId is provieded (meaning this is a top level comment) i connect comment to article
-        ...(createCommentDto.articleId && {
-          article: { connect: { id: createCommentDto.articleId } },
+        ...(isStringDefined(articleId) && {
+          article: { connect: { id: articleId } },
         }),
-        // if a parent id is provided i connect the comment to its parent
-        ...(createCommentDto.parentId && {
-          parent: { connect: { id: createCommentDto.parentId } },
+        ...(isStringDefined(parentCommentId) && {
+          parent: { connect: { id: parentCommentId } },
         }),
       },
     });
@@ -48,12 +46,14 @@ export class CommentService {
    *
    * @param parentId parent comment id.
    */
-  private async stopSubReply(parentId: string) {
-    const parent = await this.prisma.comment.findUnique({
+  private async stopSubReply(parentId: string): Promise<void> {
+    const parent: Comment | null = await this.prisma.comment.findUnique({
       where: { id: parentId },
     });
-
-    if (parent.parentId) throw new BadRequestException(NO_SUBREPLY);
+    if (
+      isDefined<Comment>(parent) &&
+      isStringDefined(parent.parentId)
+    ) throw new BadRequestException(NO_SUBREPLY);
   }
 
   /**
@@ -63,7 +63,7 @@ export class CommentService {
    * @returns the list of top level comments (no replies) for that article.
    */
   async findAll(articleId: string): Promise<CommentDto[]> {
-    const comments = await this.prisma.comment.findMany({
+    const comments: Comment[] = await this.prisma.comment.findMany({
       where: {
         articleId: articleId,
         parentId: null,
@@ -82,7 +82,7 @@ export class CommentService {
    * @returns the detailed comment and the replies
    */
   async findOne(commentId: string): Promise<CommentDto> {
-    const comment = await this.prisma.comment.findUniqueOrThrow({
+    const comment: Comment = await this.prisma.comment.findUniqueOrThrow({
       where: { id: commentId },
       include: { replies: true },
     });

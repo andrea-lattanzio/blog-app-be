@@ -4,18 +4,17 @@ export interface BaseMailContext {
   frontendBaseUri: string;
 }
 
-export class MailOptions<T = unknown> {
+export class MailOptions<T> {
   subject: string;
   context?: T;
   template: string;
-  attachments?: any[];
+  attachments?: Attachment[];
 }
 
-// ATTACHMENT STRUCTURE
-// {
-//  filename: 'header-image.jpg',
-//  path: join(ASSETS_BASE_PATH, 'header-image.jpg'),
-//  cid: 'header-image',
-// },
+class Attachment {
+  filename: string;
+  path: string;
+  cid: string;
+}
 
-export const ASSETS_BASE_PATH = join(__dirname, '..', '..', 'assets');
+export const ASSETS_BASE_PATH: string = join(__dirname, '..', '..', 'assets');

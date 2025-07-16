@@ -20,7 +20,7 @@ interface ErrorResponse {
   Prisma.PrismaClientRustPanicError,
 )
 export class PrismaExceptionsFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost): void {
+  catch(exception: unknown, host: ArgumentsHost): void {
     const context: HttpArgumentsHost = host.switchToHttp();
     const response: Response = context.getResponse<Response>();
 

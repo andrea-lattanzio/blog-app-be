@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-export const fullArticle = Prisma.validator<Prisma.ArticleDefaultArgs>()({
+export const fullArticle: Prisma.ArticleDefaultArgs = Prisma.validator<Prisma.ArticleDefaultArgs>()({
   include: {
     _count: { select: { likes: true } },
     author: true,

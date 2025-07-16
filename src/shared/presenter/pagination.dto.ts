@@ -27,12 +27,12 @@ export class PaginationQueryDto {
   @IsInt()
   @Min(1)
   @IsOptional()
-  @Transform(({ value }) => (value ? Number(value) : 0))
+  @Transform(({ value }: { value: number }) => (value ? Number(value) : 0))
   page: number;
 
   @IsInt()
   @Min(1)
   @IsOptional()
-  @Transform(({ value }) => (value ? Number(value) : 10))
+  @Transform(({ value }: { value: number }) => (value ? Number(value) : 0))
   size: number;
 }
