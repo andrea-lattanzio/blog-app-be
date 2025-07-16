@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -25,11 +26,12 @@ import { ArticleService } from './article.service';
 import { ArticleQueryDto } from './dto/article.query.dto';
 import { ArticleDto } from './dto/body';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto, UpdateChapterDto, UpdateCodeSectionDto, UpdateParagraphDto } from './dto/update-article.dto';
 
 @ApiTags('article')
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(private readonly articleService: ArticleService) { }
 
   @Post()
   @Role(UserRole.Author)
@@ -99,17 +101,53 @@ export class ArticleController {
     return this.articleService.findOne(id, userId);
   }
 
-  // @Patch(':id')
-  // @ApiOperation({
-  //   summary: 'Update Article',
-  //   description: 'This endpoint updates an article',
-  // })
-  // async update(
-  //   @Param('id') id: string,
-  //   @Body() updateArticleDto: UpdateArticleDto,
-  // ): Promise<ArticleDto> {
-  //   return this.articleService.update(id, updateArticleDto);
-  // }
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Update Article',
+    description: 'This endpoint updates an article',
+  })
+  async updateArticle(
+    @Param('id') id: string,
+    @Body() updateArticleDto: UpdateArticleDto,
+  ): Promise<ArticleDto> {
+    return this.articleService.updateArticle(id, updateArticleDto);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Update Chapter',
+    description: 'This endpoint updates a chapter',
+  })
+  async updateChapter(
+    @Param('id') id: string,
+    @Body() updateChapterDto: UpdateChapterDto,
+  ): Promise<ArticleDto> {
+    return this.articleService.updateChapter(id, updateChapterDto);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Update Paragraph',
+    description: 'This endpoint updates a paragraph',
+  })
+  async updateParagraph(
+    @Param('id') id: string,
+    @Body() updateParagraphDto: UpdateParagraphDto,
+  ): Promise<ArticleDto> {
+    return this.articleService.updateParagraph(id, updateParagraphDto);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Update Code Section',
+    description: 'This endpoint updates a code section',
+  })
+  async updateCodeSection(
+    @Param('id') id: string,
+    @Body() updateCodeSectionDto: UpdateCodeSectionDto,
+  ): Promise<ArticleDto> {
+    return this.articleService.updateCodeSection(id, updateCodeSectionDto);
+  }
 
   @Post('/like/:id')
   @ApiOperation({
