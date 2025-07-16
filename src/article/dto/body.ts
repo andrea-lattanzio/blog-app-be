@@ -1,5 +1,6 @@
 import { Article, Chapter } from '@prisma/client';
 import { Exclude, Type, plainToInstance } from 'class-transformer';
+import { UserInfoDto } from 'src/identity/auth/dto/auth.dto';
 
 type FullArticle = Article & { chapters?: Chapter[] };
 
@@ -42,7 +43,10 @@ export class ArticleDto {
   id: string;
   title: string;
   description: string;
-  author: string;
+
+  @Type(() => UserInfoDto)
+  author: UserInfoDto;
+
   tag: string;
   updatedAt: string;
   _count: { likes: number };

@@ -3,11 +3,11 @@ import { writeFileSync } from 'fs';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { OpenAPIObject } from '@nestjs/swagger';
 
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { isNumber } from 'class-validator';
+import { isDefined } from 'class-validator';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
@@ -18,6 +18,7 @@ async function bootstrap(): Promise<void> {
   const configService: ConfigService = app.get(ConfigService);
 
   app.setGlobalPrefix('/api');
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -50,7 +51,7 @@ async function bootstrap(): Promise<void> {
   );
 
   const envPort: number | undefined = configService.get<number>('server.port');
-  if (!isNumber(envPort)) { throw new Error('port is not defined'); }
+  if (!isDefined(envPort)) { throw new Error('port is not defined'); }
   const port: number = envPort || 3000;
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}/api`);
