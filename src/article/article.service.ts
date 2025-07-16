@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Article, Like, Prisma } from '@prisma/client';
+import { Article, Chapter, CodeSection, Like, Paragraph, Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/config/database/database.service';
 import { isStringDefined } from 'src/shared/utils/common';
 
 import { ArticleQueryDto } from './dto/article.query.dto';
 import { ArticleDto } from './dto/body';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto, UpdateChapterDto, UpdateCodeSectionDto, UpdateParagraphDto } from './dto/update-article.dto';
 import { createChapters } from './utils/article.create.helpers';
 import { fullArticle } from './utils/article.query';
 
@@ -122,7 +123,6 @@ export class ArticleService {
     });
 
     await this.updateViews(articleId);
-
     const result: ArticleDto = new ArticleDto(article);
     if (isStringDefined(userId)) {
       result.liked = await this.isLiked(articleId, userId);
@@ -155,24 +155,63 @@ export class ArticleService {
     return !!like;
   }
 
-  // /**
-  //  *
-  //  * @param id The article id.
-  //  * @param updateArticleDto The updated article info.
-  //  * @returns The updated article, transformed into ArticleDto class.
-  //  */
-  // async update(id: string, updateArticleDto: UpdateArticleDto) {
-  //   const { chapters, ...articleData } = updateArticleDto;
-  //   const updatedArticle = await this.prisma.article.update({
-  //     where: { id },
-  //     data: {
-  //       ...articleData,
-  //       chapters: { update: updateChapters(updateArticleDto.chapters) },
-  //     },
-  //   });
+  async updateArticle(id: string, updateArticleDto: UpdateArticleDto): Promise<ArticleDto> {
+    const updatedArticle: Article = await this.prisma.article.update({
+      where: { id },
+      data: updateArticleDto,
+    });
 
-  //   return new ArticleDto(updatedArticle);
-  // }
+    return new ArticleDto(updatedArticle);
+  }
+
+  async updateChapter(id: string, updateChapterDto: UpdateChapterDto): Promise<ArticleDto> {
+    const updatedChapter: Chapter = await this.prisma.chapter.update({
+      where: { id },
+      data: updateChapterDto,
+    });
+
+    return new ArticleDto(updatedChapter);
+  }
+
+  async updateParagraph(id: string, updateParagraphDto: UpdateParagraphDto): Promise<ArticleDto> {
+    const updatedParagraphWithArticle: Paragraph = await this.prisma.paragraph.update({
+      where: { id },
+      data: updateParagraphDto,
+      include: {
+        chapter: {
+          include: {
+            article: {
+              include: {
+                chapters: {
+                  include: {
+                    paragraphs: {
+                      include: {
+                        codeSections: true,
+                      },
+                    },
+                  },
+                },
+                comments: true,
+                likes: true,
+                author: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return new ArticleDto(updatedParagraphWithArticle);
+  }
+
+  async updateCodeSection(id: string, updateCodeSectionDto: UpdateCodeSectionDto): Promise<ArticleDto> {
+    const updatedCodeSection: CodeSection = await this.prisma.codeSection.update({
+      where: { id },
+      data: updateCodeSectionDto,
+    });
+
+    return new ArticleDto(updatedCodeSection);
+  }
 
   /**
    * This method adds a like to an article by

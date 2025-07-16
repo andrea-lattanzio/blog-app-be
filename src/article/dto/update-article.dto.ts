@@ -1,10 +1,8 @@
-import { Type } from 'class-transformer';
 import {
   IsOptional,
   IsString,
   IsUUID,
   Length,
-  ValidateNested,
 } from 'class-validator';
 
 /**
@@ -32,9 +30,6 @@ export class UpdateParagraphDto {
   @IsOptional()
   @IsString()
   text?: string;
-  @ValidateNested({ each: true })
-  @Type(() => UpdateCodeSectionDto)
-  codeSections: UpdateCodeSectionDto[];
 }
 
 export class UpdateChapterDto {
@@ -44,9 +39,6 @@ export class UpdateChapterDto {
   @IsString()
   @Length(5, 50)
   title?: string;
-  @ValidateNested({ each: true })
-  @Type(() => UpdateParagraphDto)
-  paragraphs: UpdateParagraphDto[];
 }
 
 export class UpdateArticleDto {
@@ -58,7 +50,4 @@ export class UpdateArticleDto {
   @IsString()
   @Length(10, 200)
   description?: string;
-  @ValidateNested({ each: true })
-  @Type(() => UpdateChapterDto)
-  chapters?: UpdateChapterDto[];
 }
