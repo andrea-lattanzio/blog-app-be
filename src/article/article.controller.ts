@@ -110,10 +110,10 @@ export class ArticleController {
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
   ): Promise<ArticleDto> {
-    return this.articleService.updateArticle(id, updateArticleDto);
+    return this.articleService.updateArticlePart(id, 'article', updateArticleDto);
   }
 
-  @Patch(':id')
+  @Patch('/chapter/:id')
   @ApiOperation({
     summary: 'Update Chapter',
     description: 'This endpoint updates a chapter',
@@ -122,10 +122,10 @@ export class ArticleController {
     @Param('id') id: string,
     @Body() updateChapterDto: UpdateChapterDto,
   ): Promise<ArticleDto> {
-    return this.articleService.updateChapter(id, updateChapterDto);
+    return this.articleService.updateArticlePart(id, 'chapter', updateChapterDto);
   }
 
-  @Patch(':id')
+  @Patch('/paragraph/:id')
   @ApiOperation({
     summary: 'Update Paragraph',
     description: 'This endpoint updates a paragraph',
@@ -134,10 +134,10 @@ export class ArticleController {
     @Param('id') id: string,
     @Body() updateParagraphDto: UpdateParagraphDto,
   ): Promise<ArticleDto> {
-    return this.articleService.updateParagraph(id, updateParagraphDto);
+    return this.articleService.updateArticlePart(id, 'paragraph', updateParagraphDto);
   }
 
-  @Patch(':id')
+  @Patch('/codesection/:id')
   @ApiOperation({
     summary: 'Update Code Section',
     description: 'This endpoint updates a code section',
@@ -146,7 +146,7 @@ export class ArticleController {
     @Param('id') id: string,
     @Body() updateCodeSectionDto: UpdateCodeSectionDto,
   ): Promise<ArticleDto> {
-    return this.articleService.updateCodeSection(id, updateCodeSectionDto);
+    return this.articleService.updateArticlePart(id, 'codesection', updateCodeSectionDto);
   }
 
   @Post('/like/:id')

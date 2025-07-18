@@ -1,7 +1,6 @@
 import {
   IsOptional,
   IsString,
-  IsUUID,
   Length,
 } from 'class-validator';
 
@@ -10,8 +9,6 @@ import {
  */
 
 export class UpdateCodeSectionDto {
-  @IsUUID()
-  id: string;
   @IsOptional()
   @IsString()
   language?: string;
@@ -25,16 +22,12 @@ export class UpdateCodeSectionDto {
 }
 
 export class UpdateParagraphDto {
-  @IsUUID()
-  id: string;
   @IsOptional()
   @IsString()
   text?: string;
 }
 
 export class UpdateChapterDto {
-  @IsUUID()
-  id: string;
   @IsOptional()
   @IsString()
   @Length(5, 50)

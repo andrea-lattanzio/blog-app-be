@@ -198,15 +198,7 @@ module.exports = {
     '@typescript-eslint/no-useless-constructor': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/parameter-properties': 'off',
-    '@typescript-eslint/class-methods-use-this': [
-      'warn',
-      {
-        exceptMethods: [
-          // used in NestModule
-          'configure',
-        ],
-      },
-    ],
+    '@typescript-eslint/class-methods-use-this': 'off',
 
     // inputs or args without graphql decorator
     '@typescript-eslint/lines-between-class-members': 'off',

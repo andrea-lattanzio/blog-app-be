@@ -1,3 +1,5 @@
+import type { ModelName } from 'src/article/utils/article.update.helpers';
+
 /**
  * Check if value !== undefined && !== null
  */
@@ -88,4 +90,8 @@ const CUID_REGEX: RegExp = /^c[^\s-]{8,}$/;
 
 export function isCuid(value: string): boolean {
   return CUID_REGEX.test(value);
+}
+
+export function isValidArticleModelName(modelName: string): modelName is ModelName {
+  return ['article', 'chapter', 'paragraph', 'codesection'].includes(modelName);
 }
